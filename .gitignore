@@ -1,7 +1,8 @@
 .DS_Store
 node_modules
 /dist
-
+dist*
+.commit_message
 
 # local env files
 .env.local

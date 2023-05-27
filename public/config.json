@@ -1,0 +1,6 @@
+{
+    "monitoring_API_period": 500,
+    "monitoring_start": "http://183.105.120.175:30007/main_application/start/",
+    "monitoring_stop": "http://183.105.120.175:30007/main_application/stop/",
+    "get_latest_image": "http://183.105.120.175:30007/image/latest/"
+}
