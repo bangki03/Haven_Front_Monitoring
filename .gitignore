@@ -3,6 +3,7 @@ node_modules
 /dist
 dist*
 .commit_message
+/testimage
 
 # local env files
 .env.local

@@ -5,7 +5,15 @@
     </div> -->
 
     <div class="dard-container" style="width:98%;  display:flex; flex-direction: column; justify-content: flex-start;">
-      <div class="dard-header"></div>
+      <div class="dard-header" style="display:flex; flex-direction: row; justify-content:flex-start; align-items: center; " >
+        <div v-show="isModalOpen" id="btn-back" @click="closeModal" style="margin-left:1.0em;">
+          <i id="arrow-previous" class="fa fa-arrow-left image-arrows" style="font-size: 15px; transform: scaleX(1); color: white;"/> 뒤로가기
+        </div>
+        <div v-show="isModalOpen" class="form-check form-switch" style="margin-left: auto; margin-right:1.0em; display:flex; align-items:center;">
+          <input class="form-check-input" style="height:1.5em; width:2.5em; margin-top:0.5em; margin-right:1em;" type="checkbox" id="flexSwitchCheckMask" v-model="isMaskSwitch" @change="SwitchMaskChange">
+          <label class="form-check-label" style="color: white; font-weight:200;font-size: 1.2em; margin-right:2em; margin-top:0.3em;" for="flexSwitchCheckMask">Mask</label>
+        </div>
+      </div>
       <div class="dard-main" style="display:flex; flex-direction: row; align-items: center;">
           <div style="display:flex; flex-direction: column; align-items: flex-start; margin:0.5em 1.0em 0.5em 2.0em;">
               <p class="column-header">제품 시리얼 번호</p>
@@ -40,7 +48,7 @@
           </div>
         </div>
       </div> -->
-      <div class="dard-footer" style="display:flex; flex-direction: column; align-items: center;">
+      <div v-show="!isModalOpen" class="dard-footer" style="display:flex; flex-direction: column; align-items: center;">
         <div style="display:flex; flex-direction: row; align-items: center;">
           <div class="image-container">
             <img v-if="ImageList.A1.status" id="A1" class="fill-image" :src="ImageList.A1.imagepath" @click="OpenModal" />
@@ -338,21 +346,31 @@
           </div>
         </div>
       </div>
+      <!-- 겹쳐 그리기 -->
+      <div v-show="isModalOpen" class="dard-footer" style="height:816px;">
+        <ModalFocusedImgInterior v-if="isModalOpen" :isMaskSwitch="isMaskSwitch" :image_meta="SelectedImage"></ModalFocusedImgInterior>
+      </div>
+
     </div>
 
-    <div v-if="isModalOpen" class="modal-background" @click="closeModal"></div>
-    <ModalFocusedImg v-if="isModalOpen" class="create-modal" @closeModal="closeModal" :image_meta="SelectedImage"></ModalFocusedImg>
+    <!-- 팝업 모달 -->
+    <!-- <div v-if="isModalOpen" class="modal-background" @click="closeModal"></div>
+    <ModalFocusedImg v-if="isModalOpen" class="create-modal" @closeModal="closeModal" :image_meta="SelectedImage"></ModalFocusedImg> -->
+
+    
+
+
   </div>
 </template>
 
 <script>
-import ModalFocusedImg from "@/components/ModalFocusedImg.vue"
+import ModalFocusedImgInterior from "@/components/ModalFocusedImgInterior.vue"
 import axios from "axios";
 import $ from 'jquery'
 
 export default{
   components: {
-    ModalFocusedImg
+    ModalFocusedImgInterior
   },
   data() {
     return {
@@ -423,6 +441,7 @@ export default{
       IntervalAPILoadData : null,
 
       isModalOpen: false,
+      isMaskSwitch: false,
     }
   },
   methods: {
@@ -489,6 +508,17 @@ export default{
       this.ImageList[section_id_front].maskpath = data.mask_path.split('/').slice(3).join('/')
       this.ImageList[section_id_front].result = data.result
       this.ImageList[section_id_front].status = true
+
+      // Test
+      // this.ImageList[section_id_front].imagepath_origin = '/testimage/TestSample1-1.jpg'
+      // this.ImageList[section_id_front].imagepath = '/testimage/TestSample1-1.jpg'
+      // this.ImageList[section_id_front].maskpath_origin = '/testimage/TestMask1-1.jpg'
+      // this.ImageList[section_id_front].maskpath = '/testimage/TestMask1-1.jpg'
+      // this.ImageList[section_id_front].result = "NG"
+      // this.ImageList[section_id_front].status = true
+
+
+
       console.log(this.ImageList[section_id_front])
     },
     set_section(data) {
@@ -529,6 +559,14 @@ export default{
         this.Set_Interval_LoadData()
       } else {
         this.Clear_Interval_LoadData()
+      }
+    },
+    SwitchMaskChange() {
+      // 여기서 스위치의 상태에 따른 동작을 수행합니다.
+      if (this.isMaskSwitch) {
+        console.log("On")
+      } else {
+        console.log("Off")
       }
     },
 
@@ -636,6 +674,27 @@ export default{
 
   border-top-right-radius: 1em;
   border-top-left-radius: 1em;
+}
+.create-modal-interior {
+   position: fixed;
+   /* width: calc( (100% - 200px) * 0.98 ); */
+   width: 90%;
+   height: 85%;
+   /* left: calc( 200px + (100% - 200px) * 0.01 ); */
+   left: 5%;
+   top: 5%;
+   background-color: rgba(250,252,254,0.7);
+   /* background-color: #000000; */
+
+  border-top-right-radius: 1em;
+  border-top-left-radius: 1em;
+}
+#btn-back {
+  /* color: #2777E4; */
+  color: white;
+
+  font-family:'HermeneusOne-Regular';
+  /* font-weight: bold; */
 }
 #btn-start {
   color: #2777E4;

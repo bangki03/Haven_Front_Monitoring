@@ -12,12 +12,12 @@ export default {
     }
   },
   template:
-    "<div><i v-tooltip.right='tooltip' class='fa fa-x' :class='icon' :style='{ color: iconColor }' @click='click'></i><br></div>",
+    "<div><i class='fa fa-x' :class='icon' :style='{ color: iconColor }' @click='click'></i><br></div>",
   data() {
     return {
       tool: null,
       enabled: false,
-      cursor: "default",
+      // cursor: "default",
       color: {
         enabled: "gray",
         active: "#6CC2FF",
@@ -43,32 +43,32 @@ export default {
     setPreferences() {}
   },
   computed: {
-    isActive() {
-      console.log('[computed][tool.js][isActive] - this.selected')
-      console.log(this.selected)
-      if (this.selected == this.name) {
-        this.$emit("setcursor", this.cursor);
-        return true;
-      }
-      return false;
-    },
-    iconColor() {
-      if (this.isDisabled) return this.color.disabled;
+    // isActive() {
+    //   console.log('[computed][tool.js][isActive] - this.selected')
+    //   console.log(this.selected)
+    //   if (this.selected == this.name) {
+    //     this.$emit("setcursor", this.cursor);
+    //     return true;
+    //   }
+    //   return false;
+    // },
+    // iconColor() {
+    //   if (this.isDisabled) return this.color.disabled;
 
-      // if (this.isToggled) return this.color.toggle;
-      if (this.isActive) return this.color.active;
+    //   // if (this.isToggled) return this.color.toggle;
+    //   if (this.isActive) return this.color.active;
 
-      return this.color.enabled;
-    },
-    isDisabled() {
-      return false;
-    },
-    tooltip() {
-      if (this.isDisabled) {
-        return this.name + " (select an annotation to activate tool)";
-      }
-      return this.name + " Tool";
-    }
+    //   return this.color.enabled;
+    // },
+    // isDisabled() {
+    //   return false;
+    // },
+    // tooltip() {
+    //   if (this.isDisabled) {
+    //     return this.name + " (select an annotation to activate tool)";
+    //   }
+    //   return this.name + " Tool";
+    // }
   },
   watch: {
     isActive(active) {

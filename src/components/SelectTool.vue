@@ -1,5 +1,6 @@
 <template>
-  <div><i v-tooltip.right='tooltip' class='fa fa-x' :class='icon' :style='{ color: iconColor, fontSize: fontSize + "px" }' @click='click'></i><br></div>
+  <!-- <div><i v-tooltip.right='tooltip' class='fa fa-x' :class='icon' :style='{ color: iconColor, fontSize: fontSize + "px" }' @click='click'></i><br></div> -->
+  <div><i class='fa fa-x' :class='icon' @click='click'></i><br></div>
 </template>
 
 <script>
@@ -29,7 +30,7 @@ export default {
 
       icon: "fa-hand-pointer-o",
       name: "Select",
-      cursor: "pointer",
+      // cursor: "pointer",
       fontSize: 40,
       movePath: false,
       point: null,
@@ -402,30 +403,30 @@ export default {
   },
   // too.js
   computed: {
-    isActive() {
-      if (this.selected == this.name) {
-        this.$emit("setcursor", this.cursor);
-        return true;
-      }
-      return false;
-    },
-    iconColor() {
-      if (this.isDisabled) return this.color.disabled;
+    // isActive() {
+    //   if (this.selected == this.name) {
+    //     this.$emit("setcursor", this.cursor);
+    //     return true;
+    //   }
+    //   return false;
+    // },
+    // iconColor() {
+    //   if (this.isDisabled) return this.color.disabled;
 
-      // if (this.isToggled) return this.color.toggle;
-      if (this.isActive) return this.color.active;
+    //   // if (this.isToggled) return this.color.toggle;
+    //   if (this.isActive) return this.color.active;
 
-      return this.color.enabled;
-    },
-    isDisabled() {
-      return false;
-    },
-    tooltip() {
-      if (this.isDisabled) {
-        return this.name + " (select an annotation to activate tool)";
-      }
-      return this.name + " Tool";
-    }
+    //   return this.color.enabled;
+    // },
+    // isDisabled() {
+    //   return false;
+    // },
+    // tooltip() {
+    //   if (this.isDisabled) {
+    //     return this.name + " (select an annotation to activate tool)";
+    //   }
+    //   return this.name + " Tool";
+    // }
   },
   watch: {
     keypoint(keypoint) {

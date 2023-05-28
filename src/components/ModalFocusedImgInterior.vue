@@ -1,27 +1,17 @@
 <template>
-    <div style="">
-        <div class="dard-header">
-            <SelectTool
-                v-show="false"
-                :selected="activeTool"
-                @update="activeTool = $event"
-                :scale="image.scale"
-                ref="select"
-            />
-        </div>
-        <div class="" style="display:flex; flex-direction: row; align-items: center; justify-content: flex-end; background-color: #F8F8FA;">
-            <div class="form-check form-switch">
-                <input class="form-check-input" style="height:1.5em; width:2.5em; margin-top:0.5em; margin-right:1em;" type="checkbox" role="switch" id="flexSwitchCheckMask" @change="handleSwitchChange()" checked>
-                <label class="form-check-label" style="font-size: 1.5em; margin-right:3em;" for="flexSwitchCheckMask">Mask</label>
-            </div>
-        </div>
-        <!-- <div class="middle-panel" :style="{ cursor: cursor }"> -->
-        <div class="middle-panel">
-            <div id="frame" class="frame" @wheel="onwheel" >
-                <canvas class="canvas" id="editor" ref="image" resize />
-            </div>
+    <!-- <div v-show="isMask" class="middle-panel" :style="{ cursor: cursor }"> -->
+    <div class="middle-panel">
+        <div id="frame" class="frame" @wheel="onwheel" >
+            <canvas class="canvas" id="editor" ref="image" resize />
         </div>
     </div>
+    <SelectTool
+            v-show="false"
+            :selected="activeTool"
+            @update="activeTool = $event"
+            :scale="image.scale"
+            ref="select"
+        />
 </template>
 
 <!-- <template>
@@ -64,14 +54,14 @@ export default{
             imagepath: String,
             maskpath_origin: String,
             maskpath: String,
-        }
+        },
+        isMaskSwitch: null,
     },
     data() {
         return{
-            isMask: false,
             paper: null,
-            // cursor: "move",
             zoom: 0.2,
+            activeTool: "Select",
             image: {
                 raster: {},
                 scale: 0,
@@ -117,18 +107,6 @@ export default{
         }
     },
     methods: {
-        handleSwitchChange(event) {
-            console.log("ahahaha")
-            const isChecked = event.target.checked;
-            if (isChecked) {
-                this.isMask = true; // switch 값을 true로 설정하거나 필요한 동작 수행
-            } else {
-            // 스위치가 꺼진 경우의 동작
-                this.isMask = false; // switch 값을 false로 설정하거나 필요한 동작 수행
-            }
-            // isMask = isChecked
-            console.log(this.isMask)
-        },
         initCanvas() {
             let canvas = document.getElementById("editor");
             this.paper.setup(canvas);
@@ -225,7 +203,7 @@ export default{
 
                 this.mask.raster.onLoad = () => {
                     maskLayer.addChild(this.mask.raster)
-                    this.mask.raster.opacity = 0.5;
+                    this.mask.raster.opacity = 0;
 
                     imageLayer.position = new paper.Point(0, 0);
                     maskLayer.position = new paper.Point(0, 0);
@@ -296,6 +274,16 @@ export default{
 
             return { zoom: zoom, offset: a };
         },
+    },
+    watch: {
+        "isMaskSwitch"(after) {
+            if(after == true){
+                this.mask.raster.opacity=0.5
+            }
+            else{
+                this.mask.raster.opacity=0
+            }
+        }
     },
 
     created() {
