@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
 import LoginView from "../views/LoginView.vue";
-import MyPageView from "../views/MyPageView2.vue";
+import MyPageView from "../views/MyPageView.vue";
 import ProjectMainView from "../views/ProjectMainView.vue";
 import MonitoringView from "../components/MonitoringView.vue";
 import AuthView from "../components/AuthView.vue";

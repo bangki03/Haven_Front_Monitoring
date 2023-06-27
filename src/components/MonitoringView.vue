@@ -37,7 +37,7 @@
           </div>
           <div id="btn-start" style="margin-left: auto; margin-right: 3.0em;" @click="click_start">검사 시작</div>
           <div id="btn-stop" style="margin-left: 1.0em; margin-right: 3.0em;" @click="click_stop">검사 중지</div>
-          <div id="btn-tmp" style="margin-left: 1.0em; margin-right: 3.0em;" @click="initialize">임시 front 상태 초기화</div>
+          <!-- <div id="btn-tmp" style="margin-left: 1.0em; margin-right: 3.0em;" @click="initialize">임시 front 상태 초기화</div> -->
 
       </div>
       <!-- <div style="background-color: white;">
@@ -357,7 +357,7 @@
     <!-- <div v-if="isModalOpen" class="modal-background" @click="closeModal"></div>
     <ModalFocusedImg v-if="isModalOpen" class="create-modal" @closeModal="closeModal" :image_meta="SelectedImage"></ModalFocusedImg> -->
 
-    
+
 
 
   </div>
@@ -445,6 +445,29 @@ export default{
     }
   },
   methods: {
+    // SSE
+    setupEventSource() {
+      const eventSource = new EventSource(this.config.stream_latest_image + this.$store.state.project.id); // 서버의 SSE 엔드포인트로 연결합니다.
+
+      eventSource.onopen = (event) => {
+        console.log('SSE 연결이 열렸습니다.');
+        console.log(event)
+      };
+
+      eventSource.onmessage = (event) => {
+        console.log("ahah")
+        var validJSONstring = event.data.replace(/'/g, '"');
+        const data = JSON.parse(validJSONstring); // 받은 데이터를 JSON 형태로 파싱합니다.
+        this.update_section(data);
+      };
+
+      eventSource.onerror = (event) => {
+        console.error('SSE 연결 중 오류가 발생했습니다.');
+        console.log(event)
+        eventSource.close(); // 오류 발생 시 SSE 연결을 종료합니다.
+      };
+    },
+
     // Cycle
     Set_Interval_LoadData () {
       let period = this.config.monitoring_API_period
@@ -467,24 +490,10 @@ export default{
           url: this.config.get_latest_image + this.$store.state.project.id,
           method: "GET",
           dataType: "json",
-          // data: {
-          //   image_path: "/iQ.Platform/projects/" + this.image.url,
-          // },
         })
         .then((data) => {
           this.update_section(data)
         })
-        // .catch((error) => {
-        //   alert(error)
-
-        // })
-        // .then(() => {
-        //   this.$nextTick(() => {
-        //     console.log("[AnnotatorView][load_annotator] : Done loading, So Lets set this.current.annotation = 0")
-
-        //   });
-        // })
-
     },
 
     initialize() {
@@ -522,7 +531,7 @@ export default{
       console.log(this.ImageList[section_id_front])
     },
     set_section(data) {
-      var row_num = Math.floor( (parseInt(data.section_id)-1) / 7) 
+      var row_num = Math.floor( (parseInt(data.section_id)-1) / 7)
       var col_num = parseInt(data.section_id) % 7
 
       let section_first = ''
@@ -589,23 +598,11 @@ export default{
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          "pipelines": [
-            {
-              "pipeline_name": "pipeline0",
-              "model_config": {
-                "type": "segmentation",
-                "name": "175",
-                "version": "1"
-              }
-            }
-          ]
-        }),
       }).then( data => {
         if(data.status == '200'){
-          alert("검사 시작합니다!");
+          // alert("검사 시작합니다!");
           // console.log(this.monitorSwitch)
-          this.Set_Interval_LoadData()
+          // this.Set_Interval_LoadData()
         }
       });
     },
@@ -618,15 +615,16 @@ export default{
         },
       }).then( data => {
         if(data.status == '200'){
-          alert("검사 중지합니다.!");
+          // alert("검사 중지합니다.!");
           // console.log(this.monitorSwitch)
-          this.Clear_Interval_LoadData()
+          // this.Clear_Interval_LoadData()
         }
       });
     },
 
+
     set_config() {
-      axios.get('/config.json')
+      return axios.get('/config.json')
       .then(response => {
         this.config = response.data;
         console.log(this.config)
@@ -640,11 +638,13 @@ export default{
   },
 
   created() {
-
+    this.set_config()
+    .then(() => {
+      // SSE setup
+      this.setupEventSource();
+    })
   },
   mounted() {
-    this.set_config()
-
 
   },
 

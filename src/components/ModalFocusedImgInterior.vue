@@ -121,7 +121,7 @@ export default{
             // this.image.url = this.image_meta.imagepath_img
             // console.log("this.image.url : " + this.image.url)
             this.image.raster = new paper.Raster(this.image.url);
-            
+
             const maskImage = new Image();
             maskImage.src = this.mask.url;
 
@@ -133,7 +133,7 @@ export default{
 
                 tempCtx.canvas.width = width;
                 tempCtx.canvas.height = height;
-                
+
                 this.image.raster.sendToBack();
                 this.fit();
                 this.image.ratio = (width * height) / 1000000;
@@ -174,12 +174,16 @@ export default{
         initCanvas_with_Mask() {
             let canvas = document.getElementById("editor");
             this.paper.setup(canvas);
-            this.paper.view.viewSize = [
-                // this.paper.view.size.width,
-                // window.innerWidth,
-                1296,
-                window.innerHeight
-            ];
+            // this.paper.view.viewSize = [
+            //     // this.paper.view.size.width,
+            //     // window.innerWidth,
+            //     1296,
+            //     window.innerHeight
+            // ];
+            this.paper.view.viewSize = [canvas.offsetWidth, canvas.offsetHeight];
+
+            console.log("canvas.offsetWidth: ", canvas.offsetWidth)
+            console.log("canvas.offsetHeight: ", canvas.offsetHeight)
 
 
             let imageLayer = new paper.Layer(); // 이미지를 그릴 레이어
@@ -188,7 +192,7 @@ export default{
 
             this.paper.activate();
             this.image.raster = new paper.Raster(this.image.url);
-            
+
             const maskImage = new Image();
             maskImage.src = this.mask.url;
 
@@ -202,6 +206,26 @@ export default{
                 this.mask.raster = new paper.Raster(this.mask.url);
 
                 this.mask.raster.onLoad = () => {
+
+                    const pixelData = this.mask.raster.getImageData()
+                    const data = pixelData.data;
+
+                    for (let j = 0; j < data.length; j += 4) {
+                        const red = data[j];
+                        const green = data[j + 1];
+                        const blue = data[j + 2];
+                        if(red == 0 && green == 0 && blue == 0) {
+                            data[j + 3] = 0;
+                        }
+                        else{
+                            data[j] = 255;
+                            data[j + 1] = 0;
+                            data[j + 2] = 0;
+                            data[j + 3] = 255;
+                        }
+                    }
+
+                    this.mask.raster.putImageData(pixelData)
                     maskLayer.addChild(this.mask.raster)
                     this.mask.raster.opacity = 0;
 
@@ -278,10 +302,10 @@ export default{
     watch: {
         "isMaskSwitch"(after) {
             if(after == true){
-                this.mask.raster.opacity=0.5
+                this.mask.raster.opacity = 0.5
             }
             else{
-                this.mask.raster.opacity=0
+                this.mask.raster.opacity = 0
             }
         }
     },
@@ -291,24 +315,30 @@ export default{
 
         this.image.url = this.image_meta.imagepath
         this.mask.url = this.image_meta.maskpath
+
+
+        // TESt용
+        // this.image.url = "2023-06-22_17-16-01_29image.jpg"
+        // this.mask.url = "2023-06-22_17-16-01_29mask.jpg"
+
+        // 서버 TEST용
+        // "../project/" +data.image_path.split('/').slice(3).join('/')
+        this.image.url = "../project/40/data/2023-06-22/17-16-01/2023-06-22_17-16-01_29image.jpg"
+        this.mask.url = "../project/40/data/2023-06-22/17-16-01/2023-06-22_17-16-01_29mask.jpg"
+
+        console.log("set image url: ", this.image.url)
+        console.log("set mask url: ", this.mask.url)
     },
 
     mounted() {
-        this.initCanvas_with_Mask()
+        this.$nextTick(() => {
+            this.initCanvas_with_Mask()
+        })
     },
 }
 </script>
 
-<style>
-.dard-header {
-  width: 100%;
-  height: 40px;
-
-  background-color: #BD7C4A;
-
-  border-top-right-radius: 1em;
-  border-top-left-radius: 1em;
-}
+<style scoped>
 .middle-panel {
     display: block;
     /* width: calc(100% - 250px - 40px); */
@@ -325,20 +355,13 @@ export default{
     /* border-top-right-radius: 1em; */
     border-bottom-right-radius: 1em;
 }
-.dard-main {
-  width: 100%;
-  height: 80px;
-
-  background-color: #F8F8FA;
-
+.frame{
+    width: 100%;
+    height: 100%;
 }
-.dard-footer {
-  width: 100%;
-
-  background-color: white;
-
-  border-bottom-left-radius: 1em;
-  border-bottom-right-radius: 1em;
+.canvas {
+    width: 100%;
+    height: 100%;
 }
 
 </style>

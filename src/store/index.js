@@ -51,6 +51,19 @@ export default createStore({
       sessionStorage.removeItem("account");
     },
 
+    loadSessionStorageProject(state) {
+      if(sessionStorage.getItem("project") != "undefined" && sessionStorage.getItem("project") != "null" && sessionStorage.getItem("project") != null) {
+        state.project = JSON.parse(sessionStorage.getItem("project"))
+      }
+    },
+    saveSessionStorageProject(state) {
+      sessionStorage.setItem("project", JSON.stringify(state.project))
+      
+      console.log('#### store - saveProjectSession')
+      console.log(state.project)
+      console.log("############################")
+    },
+
     setProject(state, data) {
       state.project.id = data.id
       state.project.project_name = data.project_name

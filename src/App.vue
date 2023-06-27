@@ -1,5 +1,5 @@
 <template>
-  <div style="display:none;">version: A.02 / Date : 23.05.28 11:00</div>
+  <div style="display:none;">version: A.03 / Date : 23.06.23 12:00</div>
   <RouterView>  </RouterView>
 
 </template>
