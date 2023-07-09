@@ -9,7 +9,17 @@
 
         style="height: 58.9px; width: 176px; padding: 0;"
       />
-      <p style="margin-left: auto; margin-right:0.5em;">version: A.04 / Date : 23.06.27 20:00</p>
+      <p style="margin-left: auto; margin-right:0.5em; height: 1.5rem; margin-bottom: 0; cursor: pointer;" @mouseenter="showrevision = true" @mouseleave="showrevision = false">
+        Version : A.05 / Relase Date : 23.07.09 23:30</p>
+      <div v-if=showrevision class="revision">
+        <br>
+        Version : A.05<br>
+        Relase Date : 23.07.09 23:30 <br>
+        <br>
+        [LoginView]<br>
+        - 버전명 마우스 올릴 시, 변경사항 표시 기능 추가<br>
+        <br>
+      </div>
     </div>
     <div class="row" style="height: 50%; margin: 0 auto;"></div>
   </div>
