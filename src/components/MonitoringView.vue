@@ -17,23 +17,23 @@
       <div class="dard-main" style="display:flex; flex-direction: row; align-items: center;">
           <div style="display:flex; flex-direction: column; align-items: flex-start; margin:0.5em 1.0em 0.5em 2.0em;">
               <p class="column-header">제품 시리얼 번호</p>
-              <p style="font-family: Poppins-SemiBold; font-size:1.5rem; margin-bottom:0;">2023.01.05 09:22</p>
+              <p style="font-family: Poppins-SemiBold; font-size:1.5rem; margin-bottom:0;">{{ Summary.serialNo }}</p>
           </div>
           <div style="display:flex; flex-direction: column; align-items: flex-start; margin:0.5em 1.0em;">
               <p class="column-header">검사 일시</p>
-              <p style="font-family: Poppins-SemiBold; font-size:1.5rem; margin-bottom:0;">2023.01.05 12:31</p>
+              <p style="font-family: Poppins-SemiBold; font-size:1.5rem; margin-bottom:0;">{{ Summary.date }}</p>
           </div>
           <div style="display:flex; flex-direction: column; align-items: center; margin:0.5em 1.0em;">
               <p class="column-header">검사 시간</p>
-              <p style="font-family: Poppins-SemiBold; font-size:1.5rem; margin-bottom:0;">000</p>
+              <p style="font-family: Poppins-SemiBold; font-size:1.5rem; margin-bottom:0;">{{ Summary.time }}</p>
           </div>
           <div style="display:flex; flex-direction: column; align-items: center; margin:0.5em 1.0em;">
               <p class="column-header">모델 불확실성</p>
-              <p style="font-family: Poppins-SemiBold; font-size:1.5rem; margin-bottom:0;">000</p>
+              <p style="font-family: Poppins-SemiBold; font-size:1.5rem; margin-bottom:0;">{{ Summary.uncertainty }}</p>
           </div>
           <div style="display:flex; flex-direction: column; align-items: center; margin:0.5em 1.0em;">
               <p class="column-header">검사 결과</p>
-              <p style="font-family: Poppins-SemiBold; font-size:1.5rem; margin-bottom:0;">000</p>
+              <p style="font-family: Poppins-SemiBold; font-size:1.5rem; margin-bottom:0;" :style="{'color': Summary.result === 'NG' ? 'red' : 'black'}" >{{ Summary.result }}</p>
           </div>
           <div id="btn-start" style="margin-left: auto; margin-right: 3.0em;" @click="click_start">검사 시작</div>
           <div id="btn-stop" style="margin-left: 1.0em; margin-right: 3.0em;" @click="click_stop">검사 중지</div>
@@ -53,296 +53,296 @@
           <div class="image-container">
             <img v-if="ImageList.A1.status" id="A1" class="fill-image" :src="ImageList.A1.imagepath" @click="OpenModal" />
             <div v-else class="blank-image"> A1</div>
-            <div v-if="!isModalOpen" class="background-overlay" id="A1" @click="OpenModal" :class="{ 'green-overlay': ImageList.A1.result === 'OK', 'red-overlay': ImageList.A1.result === 'NG' }"></div>
+            <div v-if="!isModalOpen" class="background-overlay" id="A1" @click="OpenModal" :class="{ 'green-overlay': ImageList.A1.result === 'OK', 'red-overlay': ImageList.A1.result === 'NG', 'none-overlay': ImageList.A1.result !== 'OK' && ImageList.A1.result !== 'NG' }"></div>
           </div>
           <div class="image-container">
             <img v-if="ImageList.A2.status" id="A2" class="fill-image" :src="ImageList.A2.imagepath" @click="OpenModal" />
             <div v-else class="blank-image"> A2</div>
-            <div v-if="!isModalOpen" class="background-overlay" id="A2" @click="OpenModal" :class="{ 'green-overlay': ImageList.A2.result === 'OK', 'red-overlay': ImageList.A2.result === 'NG' }"></div>
+            <div v-if="!isModalOpen" class="background-overlay" id="A2" @click="OpenModal" :class="{ 'green-overlay': ImageList.A2.result === 'OK', 'red-overlay': ImageList.A2.result === 'NG', 'none-overlay': ImageList.A2.result !== 'OK' && ImageList.A2.result !== 'NG' }"></div>
           </div>
           <div class="image-container">
             <img v-if="ImageList.A3.status" id="A3" class="fill-image" :src="ImageList.A3.imagepath" @click="OpenModal" />
             <div v-else class="blank-image"> A3</div>
-            <div v-if="!isModalOpen" class="background-overlay" id="A3" @click="OpenModal" :class="{ 'green-overlay': ImageList.A3.result === 'OK', 'red-overlay': ImageList.A3.result === 'NG' }"></div>
+            <div v-if="!isModalOpen" class="background-overlay" id="A3" @click="OpenModal" :class="{ 'green-overlay': ImageList.A3.result === 'OK', 'red-overlay': ImageList.A3.result === 'NG', 'none-overlay': ImageList.A3.result !== 'OK' && ImageList.A3.result !== 'NG' }"></div>
           </div>
           <div class="image-container">
             <img v-if="ImageList.A4.status" id="A4" class="fill-image" :src="ImageList.A4.imagepath" @click="OpenModal" />
             <div v-else class="blank-image"> A4</div>
-            <div v-if="!isModalOpen" class="background-overlay" id="A4" @click="OpenModal" :class="{ 'green-overlay': ImageList.A4.result === 'OK', 'red-overlay': ImageList.A4.result === 'NG' }"></div>
+            <div v-if="!isModalOpen" class="background-overlay" id="A4" @click="OpenModal" :class="{ 'green-overlay': ImageList.A4.result === 'OK', 'red-overlay': ImageList.A4.result === 'NG', 'none-overlay': ImageList.A4.result !== 'OK' && ImageList.A4.result !== 'NG' }"></div>
           </div>
           <div class="image-container">
             <img v-if="ImageList.A5.status" id="A5" class="fill-image" :src="ImageList.A5.imagepath" @click="OpenModal" />
             <div v-else class="blank-image"> A5</div>
-            <div v-if="!isModalOpen" class="background-overlay" id="A5" @click="OpenModal" :class="{ 'green-overlay': ImageList.A5.result === 'OK', 'red-overlay': ImageList.A5.result === 'NG' }"></div>
+            <div v-if="!isModalOpen" class="background-overlay" id="A5" @click="OpenModal" :class="{ 'green-overlay': ImageList.A5.result === 'OK', 'red-overlay': ImageList.A5.result === 'NG', 'none-overlay': ImageList.A5.result !== 'OK' && ImageList.A5.result !== 'NG' }"></div>
           </div>
           <div class="image-container">
             <img v-if="ImageList.A6.status" id="A6" class="fill-image" :src="ImageList.A6.imagepath" @click="OpenModal" />
             <div v-else class="blank-image"> A6</div>
-            <div v-if="!isModalOpen" class="background-overlay" id="A6" @click="OpenModal" :class="{ 'green-overlay': ImageList.A6.result === 'OK', 'red-overlay': ImageList.A6.result === 'NG' }"></div>
+            <div v-if="!isModalOpen" class="background-overlay" id="A6" @click="OpenModal" :class="{ 'green-overlay': ImageList.A6.result === 'OK', 'red-overlay': ImageList.A6.result === 'NG', 'none-overlay': ImageList.A6.result !== 'OK' && ImageList.A6.result !== 'NG' }"></div>
           </div>
           <div class="image-container">
             <img v-if="ImageList.A7.status" id="A7" class="fill-image" :src="ImageList.A7.imagepath" @click="OpenModal" />
             <div v-else class="blank-image"> A7</div>
-            <div v-if="!isModalOpen" class="background-overlay" id="A7" @click="OpenModal" :class="{ 'green-overlay': ImageList.A7.result === 'OK', 'red-overlay': ImageList.A7.result === 'NG' }"></div>
+            <div v-if="!isModalOpen" class="background-overlay" id="A7" @click="OpenModal" :class="{ 'green-overlay': ImageList.A7.result === 'OK', 'red-overlay': ImageList.A7.result === 'NG', 'none-overlay': ImageList.A7.result !== 'OK' && ImageList.G1.result !== 'NG' }"></div>
           </div>
         </div>
         <div style="display:flex; flex-direction: row; align-items: center;">
           <div class="image-container">
             <img v-if="ImageList.B1.status" id="B1" class="fill-image" :src="ImageList.B1.imagepath" @click="OpenModal" />
             <div v-else class="blank-image"> B1</div>
-            <div v-if="!isModalOpen" class="background-overlay" id="B1" @click="OpenModal" :class="{ 'green-overlay': ImageList.B1.result === 'OK', 'red-overlay': ImageList.B1.result === 'NG' }"></div>
+            <div v-if="!isModalOpen" class="background-overlay" id="B1" @click="OpenModal" :class="{ 'green-overlay': ImageList.B1.result === 'OK', 'red-overlay': ImageList.B1.result === 'NG', 'none-overlay': ImageList.B1.result !== 'OK' && ImageList.B1.result !== 'NG' }"></div>
           </div>
           <div class="image-container">
             <img v-if="ImageList.B2.status" id="B2" class="fill-image" :src="ImageList.B2.imagepath" @click="OpenModal" />
             <div v-else class="blank-image"> B2</div>
-            <div v-if="!isModalOpen" class="background-overlay" id="B2" @click="OpenModal" :class="{ 'green-overlay': ImageList.B2.result === 'OK', 'red-overlay': ImageList.B2.result === 'NG' }"></div>
+            <div v-if="!isModalOpen" class="background-overlay" id="B2" @click="OpenModal" :class="{ 'green-overlay': ImageList.B2.result === 'OK', 'red-overlay': ImageList.B2.result === 'NG', 'none-overlay': ImageList.B2.result !== 'OK' && ImageList.B2.result !== 'NG' }"></div>
           </div>
           <div class="image-container">
             <img v-if="ImageList.B3.status" id="B3" class="fill-image" :src="ImageList.B3.imagepath" @click="OpenModal" />
             <div v-else class="blank-image"> B3</div>
-            <div v-if="!isModalOpen" class="background-overlay" id="B3" @click="OpenModal" :class="{ 'green-overlay': ImageList.B3.result === 'OK', 'red-overlay': ImageList.B3.result === 'NG' }"></div>
+            <div v-if="!isModalOpen" class="background-overlay" id="B3" @click="OpenModal" :class="{ 'green-overlay': ImageList.B3.result === 'OK', 'red-overlay': ImageList.B3.result === 'NG', 'none-overlay': ImageList.B3.result !== 'OK' && ImageList.B3.result !== 'NG' }"></div>
           </div>
           <div class="image-container">
             <img v-if="ImageList.B4.status" id="B4" class="fill-image" :src="ImageList.B4.imagepath" @click="OpenModal" />
             <div v-else class="blank-image"> B4</div>
-            <div v-if="!isModalOpen" class="background-overlay" id="B4" @click="OpenModal" :class="{ 'green-overlay': ImageList.B4.result === 'OK', 'red-overlay': ImageList.B4.result === 'NG' }"></div>
+            <div v-if="!isModalOpen" class="background-overlay" id="B4" @click="OpenModal" :class="{ 'green-overlay': ImageList.B4.result === 'OK', 'red-overlay': ImageList.B4.result === 'NG', 'none-overlay': ImageList.B4.result !== 'OK' && ImageList.B4.result !== 'NG' }"></div>
           </div>
           <div class="image-container">
             <img v-if="ImageList.B5.status" id="B5" class="fill-image" :src="ImageList.B5.imagepath" @click="OpenModal" />
             <div v-else class="blank-image"> B5</div>
-            <div v-if="!isModalOpen" class="background-overlay" id="B5" @click="OpenModal" :class="{ 'green-overlay': ImageList.B5.result === 'OK', 'red-overlay': ImageList.B5.result === 'NG' }"></div>
+            <div v-if="!isModalOpen" class="background-overlay" id="B5" @click="OpenModal" :class="{ 'green-overlay': ImageList.B5.result === 'OK', 'red-overlay': ImageList.B5.result === 'NG', 'none-overlay': ImageList.B5.result !== 'OK' && ImageList.B5.result !== 'NG' }"></div>
           </div>
           <div class="image-container">
             <img v-if="ImageList.B6.status" id="B6" class="fill-image" :src="ImageList.B6.imagepath" @click="OpenModal" />
             <div v-else class="blank-image"> B6</div>
-            <div v-if="!isModalOpen" class="background-overlay" id="B6" @click="OpenModal" :class="{ 'green-overlay': ImageList.B6.result === 'OK', 'red-overlay': ImageList.B6.result === 'NG' }"></div>
+            <div v-if="!isModalOpen" class="background-overlay" id="B6" @click="OpenModal" :class="{ 'green-overlay': ImageList.B6.result === 'OK', 'red-overlay': ImageList.B6.result === 'NG', 'none-overlay': ImageList.B6.result !== 'OK' && ImageList.B6.result !== 'NG' }"></div>
           </div>
           <div class="image-container">
             <img v-if="ImageList.B7.status" id="B7" class="fill-image" :src="ImageList.B7.imagepath" @click="OpenModal" />
             <div v-else class="blank-image"> B7</div>
-            <div v-if="!isModalOpen" class="background-overlay" id="B7"  @click="OpenModal" :class="{ 'green-overlay': ImageList.B7.result === 'OK', 'red-overlay': ImageList.B7.result === 'NG' }"></div>
+            <div v-if="!isModalOpen" class="background-overlay" id="B7"  @click="OpenModal" :class="{ 'green-overlay': ImageList.B7.result === 'OK', 'red-overlay': ImageList.B7.result === 'NG', 'none-overlay': ImageList.B7.result !== 'OK' && ImageList.B7.result !== 'NG' }"></div>
           </div>
         </div>
         <div style="display:flex; flex-direction: row; align-items: center;">
           <div class="image-container">
             <img v-if="ImageList.C1.status" id="C1" class="fill-image" :src="ImageList.C1.imagepath" @click="OpenModal" />
             <div v-else class="blank-image"> C1</div>
-            <div v-if="!isModalOpen" class="background-overlay" id="C1" @click="OpenModal" :class="{ 'green-overlay': ImageList.C1.result === 'OK', 'red-overlay': ImageList.C1.result === 'NG' }"></div>
+            <div v-if="!isModalOpen" class="background-overlay" id="C1" @click="OpenModal" :class="{ 'green-overlay': ImageList.C1.result === 'OK', 'red-overlay': ImageList.C1.result === 'NG', 'none-overlay': ImageList.C1.result !== 'OK' && ImageList.C1.result !== 'NG' }"></div>
           </div>
           <div class="image-container">
             <img v-if="ImageList.C2.status" id="C2" class="fill-image" :src="ImageList.C2.imagepath" @click="OpenModal" />
             <div v-else class="blank-image"> C2</div>
-            <div v-if="!isModalOpen" class="background-overlay" id="C2" @click="OpenModal" :class="{ 'green-overlay': ImageList.C2.result === 'OK', 'red-overlay': ImageList.C2.result === 'NG' }"></div>
+            <div v-if="!isModalOpen" class="background-overlay" id="C2" @click="OpenModal" :class="{ 'green-overlay': ImageList.C2.result === 'OK', 'red-overlay': ImageList.C2.result === 'NG', 'none-overlay': ImageList.C2.result !== 'OK' && ImageList.C2.result !== 'NG' }"></div>
           </div>
           <div class="image-container">
             <img v-if="ImageList.C3.status" id="C3" class="fill-image" :src="ImageList.C3.imagepath" @click="OpenModal" />
             <div v-else class="blank-image"> C3</div>
-            <div v-if="!isModalOpen" class="background-overlay" id="C3" @click="OpenModal" :class="{ 'green-overlay': ImageList.C3.result === 'OK', 'red-overlay': ImageList.C3.result === 'NG' }"></div>
+            <div v-if="!isModalOpen" class="background-overlay" id="C3" @click="OpenModal" :class="{ 'green-overlay': ImageList.C3.result === 'OK', 'red-overlay': ImageList.C3.result === 'NG', 'none-overlay': ImageList.C3.result !== 'OK' && ImageList.C3.result !== 'NG' }"></div>
           </div>
           <div class="image-container">
             <img v-if="ImageList.C4.status" id="C4" class="fill-image" :src="ImageList.C4.imagepath" @click="OpenModal" />
             <div v-else class="blank-image"> C4</div>
-            <div v-if="!isModalOpen" class="background-overlay" id="C4" @click="OpenModal" :class="{ 'green-overlay': ImageList.C4.result === 'OK', 'red-overlay': ImageList.C4.result === 'NG' }"></div>
+            <div v-if="!isModalOpen" class="background-overlay" id="C4" @click="OpenModal" :class="{ 'green-overlay': ImageList.C4.result === 'OK', 'red-overlay': ImageList.C4.result === 'NG', 'none-overlay': ImageList.C4.result !== 'OK' && ImageList.C4.result !== 'NG' }"></div>
           </div>
           <div class="image-container">
             <img v-if="ImageList.C5.status" id="C5" class="fill-image" :src="ImageList.C5.imagepath" @click="OpenModal" />
             <div v-else class="blank-image"> C5</div>
-            <div v-if="!isModalOpen" class="background-overlay" id="C5" @click="OpenModal" :class="{ 'green-overlay': ImageList.C5.result === 'OK', 'red-overlay': ImageList.C5.result === 'NG' }"></div>
+            <div v-if="!isModalOpen" class="background-overlay" id="C5" @click="OpenModal" :class="{ 'green-overlay': ImageList.C5.result === 'OK', 'red-overlay': ImageList.C5.result === 'NG', 'none-overlay': ImageList.C5.result !== 'OK' && ImageList.C5.result !== 'NG' }"></div>
           </div>
           <div class="image-container">
             <img v-if="ImageList.C6.status" id="C6" class="fill-image" :src="ImageList.C6.imagepath" @click="OpenModal" />
             <div v-else class="blank-image"> C6</div>
-            <div v-if="!isModalOpen" class="background-overlay" id="C6" @click="OpenModal" :class="{ 'green-overlay': ImageList.C6.result === 'OK', 'red-overlay': ImageList.C6.result === 'NG' }"></div>
+            <div v-if="!isModalOpen" class="background-overlay" id="C6" @click="OpenModal" :class="{ 'green-overlay': ImageList.C6.result === 'OK', 'red-overlay': ImageList.C6.result === 'NG', 'none-overlay': ImageList.C6.result !== 'OK' && ImageList.C6.result !== 'NG' }"></div>
           </div>
           <div class="image-container">
             <img v-if="ImageList.C7.status" id="C7" class="fill-image" :src="ImageList.C7.imagepath" @click="OpenModal" />
             <div v-else class="blank-image"> C7</div>
-            <div v-if="!isModalOpen" class="background-overlay" id="C7" @click="OpenModal" :class="{ 'green-overlay': ImageList.C7.result === 'OK', 'red-overlay': ImageList.C7.result === 'NG' }"></div>
+            <div v-if="!isModalOpen" class="background-overlay" id="C7" @click="OpenModal" :class="{ 'green-overlay': ImageList.C7.result === 'OK', 'red-overlay': ImageList.C7.result === 'NG', 'none-overlay': ImageList.C7.result !== 'OK' && ImageList.C7.result !== 'NG' }"></div>
           </div>
         </div>
         <div style="display:flex; flex-direction: row; align-items: center;">
           <div class="image-container">
             <img v-if="ImageList.D1.status" id="D1" class="fill-image" :src="ImageList.D1.imagepath" @click="OpenModal" />
             <div v-else class="blank-image"> D1</div>
-            <div v-if="!isModalOpen" class="background-overlay" id="D1" @click="OpenModal" :class="{ 'green-overlay': ImageList.D1.result === 'OK', 'red-overlay': ImageList.D1.result === 'NG' }"></div>
+            <div v-if="!isModalOpen" class="background-overlay" id="D1" @click="OpenModal" :class="{ 'green-overlay': ImageList.D1.result === 'OK', 'red-overlay': ImageList.D1.result === 'NG', 'none-overlay': ImageList.D1.result !== 'OK' && ImageList.D1.result !== 'NG' }"></div>
           </div>
           <div class="image-container">
             <img v-if="ImageList.D2.status" id="D2" class="fill-image" :src="ImageList.D2.imagepath" @click="OpenModal" />
             <div v-else class="blank-image"> D2</div>
-            <div v-if="!isModalOpen" class="background-overlay" id="D2" @click="OpenModal" :class="{ 'green-overlay': ImageList.D2.result === 'OK', 'red-overlay': ImageList.D2.result === 'NG' }"></div>
+            <div v-if="!isModalOpen" class="background-overlay" id="D2" @click="OpenModal" :class="{ 'green-overlay': ImageList.D2.result === 'OK', 'red-overlay': ImageList.D2.result === 'NG', 'none-overlay': ImageList.D2.result !== 'OK' && ImageList.D2.result !== 'NG' }"></div>
           </div>
           <div class="image-container">
             <img v-if="ImageList.D3.status" id="D3" class="fill-image" :src="ImageList.D3.imagepath" @click="OpenModal" />
             <div v-else class="blank-image"> D3</div>
-            <div v-if="!isModalOpen" class="background-overlay" id="D3" @click="OpenModal" :class="{ 'green-overlay': ImageList.D3.result === 'OK', 'red-overlay': ImageList.D3.result === 'NG' }"></div>
+            <div v-if="!isModalOpen" class="background-overlay" id="D3" @click="OpenModal" :class="{ 'green-overlay': ImageList.D3.result === 'OK', 'red-overlay': ImageList.D3.result === 'NG', 'none-overlay': ImageList.D3.result !== 'OK' && ImageList.D3.result !== 'NG' }"></div>
           </div>
           <div class="image-container">
             <img v-if="ImageList.D4.status" id="D4" class="fill-image" :src="ImageList.D4.imagepath" @click="OpenModal" />
             <div v-else class="blank-image"> D4</div>
-            <div v-if="!isModalOpen" class="background-overlay" id="D4" @click="OpenModal" :class="{ 'green-overlay': ImageList.D4.result === 'OK', 'red-overlay': ImageList.D4.result === 'NG' }"></div>
+            <div v-if="!isModalOpen" class="background-overlay" id="D4" @click="OpenModal" :class="{ 'green-overlay': ImageList.D4.result === 'OK', 'red-overlay': ImageList.D4.result === 'NG', 'none-overlay': ImageList.D4.result !== 'OK' && ImageList.D4.result !== 'NG' }"></div>
           </div>
           <div class="image-container">
             <img v-if="ImageList.D5.status" id="D5" class="fill-image" :src="ImageList.D5.imagepath" @click="OpenModal" />
             <div v-else class="blank-image"> D5</div>
-            <div v-if="!isModalOpen" class="background-overlay" id="D5" @click="OpenModal" :class="{ 'green-overlay': ImageList.D5.result === 'OK', 'red-overlay': ImageList.D5.result === 'NG' }"></div>
+            <div v-if="!isModalOpen" class="background-overlay" id="D5" @click="OpenModal" :class="{ 'green-overlay': ImageList.D5.result === 'OK', 'red-overlay': ImageList.D5.result === 'NG', 'none-overlay': ImageList.D5.result !== 'OK' && ImageList.D5.result !== 'NG' }"></div>
           </div>
           <div class="image-container">
             <img v-if="ImageList.D6.status" id="D6" class="fill-image" :src="ImageList.D6.imagepath" @click="OpenModal" />
             <div v-else class="blank-image"> D6</div>
-            <div v-if="!isModalOpen" class="background-overlay" id="D6" @click="OpenModal" :class="{ 'green-overlay': ImageList.D6.result === 'OK', 'red-overlay': ImageList.D6.result === 'NG' }"></div>
+            <div v-if="!isModalOpen" class="background-overlay" id="D6" @click="OpenModal" :class="{ 'green-overlay': ImageList.D6.result === 'OK', 'red-overlay': ImageList.D6.result === 'NG', 'none-overlay': ImageList.D6.result !== 'OK' && ImageList.D6.result !== 'NG' }"></div>
           </div>
           <div class="image-container">
             <img v-if="ImageList.D7.status" id="D7" class="fill-image" :src="ImageList.D7.imagepath" @click="OpenModal" />
             <div v-else class="blank-image"> D7</div>
-            <div v-if="!isModalOpen" class="background-overlay" id="D7" @click="OpenModal" :class="{ 'green-overlay': ImageList.D7.result === 'OK', 'red-overlay': ImageList.D7.result === 'NG' }"></div>
+            <div v-if="!isModalOpen" class="background-overlay" id="D7" @click="OpenModal" :class="{ 'green-overlay': ImageList.D7.result === 'OK', 'red-overlay': ImageList.D7.result === 'NG', 'none-overlay': ImageList.D7.result !== 'OK' && ImageList.D7.result !== 'NG' }"></div>
           </div>
         </div>
         <div style="display:flex; flex-direction: row; align-items: center;">
           <div class="image-container">
             <img v-if="ImageList.E1.status" id="E1" class="fill-image" :src="ImageList.E1.imagepath" @click="OpenModal" />
             <div v-else class="blank-image"> E1</div>
-            <div v-if="!isModalOpen" class="background-overlay" id="E1" click="OpenModal" :class="{ 'green-overlay': ImageList.E1.result === 'OK', 'red-overlay': ImageList.E1.result === 'NG' }"></div>
+            <div v-if="!isModalOpen" class="background-overlay" id="E1" click="OpenModal" :class="{ 'green-overlay': ImageList.E1.result === 'OK', 'red-overlay': ImageList.E1.result === 'NG', 'none-overlay': ImageList.E1.result !== 'OK' && ImageList.E1.result !== 'NG' }"></div>
           </div>
           <div class="image-container">
             <img v-if="ImageList.E2.status" id="E2" class="fill-image" :src="ImageList.E2.imagepath" @click="OpenModal" />
             <div v-else class="blank-image"> E2</div>
-            <div v-if="!isModalOpen" class="background-overlay" id="E2" @click="OpenModal" :class="{ 'green-overlay': ImageList.E2.result === 'OK', 'red-overlay': ImageList.E2.result === 'NG' }"></div>
+            <div v-if="!isModalOpen" class="background-overlay" id="E2" @click="OpenModal" :class="{ 'green-overlay': ImageList.E2.result === 'OK', 'red-overlay': ImageList.E2.result === 'NG', 'none-overlay': ImageList.E2.result !== 'OK' && ImageList.E2.result !== 'NG' }"></div>
           </div>
           <div class="image-container">
             <img v-if="ImageList.E3.status" id="E3" class="fill-image" :src="ImageList.E3.imagepath" @click="OpenModal" />
             <div v-else class="blank-image"> E3</div>
-            <div v-if="!isModalOpen" class="background-overlay" id="E3" @click="OpenModal" :class="{ 'green-overlay': ImageList.E3.result === 'OK', 'red-overlay': ImageList.E3.result === 'NG' }"></div>
+            <div v-if="!isModalOpen" class="background-overlay" id="E3" @click="OpenModal" :class="{ 'green-overlay': ImageList.E3.result === 'OK', 'red-overlay': ImageList.E3.result === 'NG', 'none-overlay': ImageList.E3.result !== 'OK' && ImageList.E3.result !== 'NG' }"></div>
           </div>
           <div class="image-container">
             <img v-if="ImageList.E4.status" id="E4" class="fill-image" :src="ImageList.E4.imagepath" @click="OpenModal" />
             <div v-else class="blank-image"> E4</div>
-            <div v-if="!isModalOpen" class="background-overlay" id="E4" @click="OpenModal" :class="{ 'green-overlay': ImageList.E4.result === 'OK', 'red-overlay': ImageList.E4.result === 'NG' }"></div>
+            <div v-if="!isModalOpen" class="background-overlay" id="E4" @click="OpenModal" :class="{ 'green-overlay': ImageList.E4.result === 'OK', 'red-overlay': ImageList.E4.result === 'NG', 'none-overlay': ImageList.E4.result !== 'OK' && ImageList.E4.result !== 'NG' }"></div>
           </div>
           <div class="image-container">
             <img v-if="ImageList.E5.status" id="E5" class="fill-image" :src="ImageList.E5.imagepath" @click="OpenModal" />
             <div v-else class="blank-image"> E5</div>
-            <div v-if="!isModalOpen" class="background-overlay" id="E5" @click="OpenModal" :class="{ 'green-overlay': ImageList.E5.result === 'OK', 'red-overlay': ImageList.E5.result === 'NG' }"></div>
+            <div v-if="!isModalOpen" class="background-overlay" id="E5" @click="OpenModal" :class="{ 'green-overlay': ImageList.E5.result === 'OK', 'red-overlay': ImageList.E5.result === 'NG', 'none-overlay': ImageList.E5.result !== 'OK' && ImageList.E5.result !== 'NG' }"></div>
           </div>
           <div class="image-container">
             <img v-if="ImageList.E6.status" id="E6" class="fill-image" :src="ImageList.E6.imagepath" @click="OpenModal" />
             <div v-else class="blank-image"> E6</div>
-            <div v-if="!isModalOpen" class="background-overlay" id="E6" @click="OpenModal" :class="{ 'green-overlay': ImageList.E6.result === 'OK', 'red-overlay': ImageList.E6.result === 'NG' }"></div>
+            <div v-if="!isModalOpen" class="background-overlay" id="E6" @click="OpenModal" :class="{ 'green-overlay': ImageList.E6.result === 'OK', 'red-overlay': ImageList.E6.result === 'NG', 'none-overlay': ImageList.E6.result !== 'OK' && ImageList.E6.result !== 'NG' }"></div>
           </div>
           <div class="image-container">
             <img v-if="ImageList.E7.status" id="E7" class="fill-image" :src="ImageList.E7.imagepath" @click="OpenModal" />
             <div v-else class="blank-image"> E7</div>
-            <div v-if="!isModalOpen" class="background-overlay" id="E7" @click="OpenModal" :class="{ 'green-overlay': ImageList.E7.result === 'OK', 'red-overlay': ImageList.E7.result === 'NG' }"></div>
+            <div v-if="!isModalOpen" class="background-overlay" id="E7" @click="OpenModal" :class="{ 'green-overlay': ImageList.E7.result === 'OK', 'red-overlay': ImageList.E7.result === 'NG', 'none-overlay': ImageList.E7.result !== 'OK' && ImageList.E7.result !== 'NG' }"></div>
           </div>
         </div>
         <div style="display:flex; flex-direction: row; align-items: center;">
           <div class="image-container">
             <img v-if="ImageList.F1.status" id="F1" class="fill-image" :src="ImageList.F1.imagepath" @click="OpenModal" />
             <div v-else class="blank-image"> F1</div>
-            <div v-if="!isModalOpen" class="background-overlay" id="F1" @click="OpenModal" :class="{ 'green-overlay': ImageList.F1.result === 'OK', 'red-overlay': ImageList.F1.result === 'NG' }"></div>
+            <div v-if="!isModalOpen" class="background-overlay" id="F1" @click="OpenModal" :class="{ 'green-overlay': ImageList.F1.result === 'OK', 'red-overlay': ImageList.F1.result === 'NG', 'none-overlay': ImageList.F1.result !== 'OK' && ImageList.F1.result !== 'NG' }"></div>
           </div>
           <div class="image-container">
             <img v-if="ImageList.F2.status" id="F2" class="fill-image" :src="ImageList.F2.imagepath" @click="OpenModal" />
             <div v-else class="blank-image"> F2</div>
-            <div v-if="!isModalOpen" class="background-overlay" id="F2" @click="OpenModal" :class="{ 'green-overlay': ImageList.F2.result === 'OK', 'red-overlay': ImageList.F2.result === 'NG' }"></div>
+            <div v-if="!isModalOpen" class="background-overlay" id="F2" @click="OpenModal" :class="{ 'green-overlay': ImageList.F2.result === 'OK', 'red-overlay': ImageList.F2.result === 'NG', 'none-overlay': ImageList.F2.result !== 'OK' && ImageList.F2.result !== 'NG' }"></div>
           </div>
           <div class="image-container">
             <img v-if="ImageList.F3.status" id="F3" class="fill-image" :src="ImageList.F3.imagepath" @click="OpenModal" />
             <div v-else class="blank-image"> F3</div>
-            <div v-if="!isModalOpen" class="background-overlay" id="F3" @click="OpenModal" :class="{ 'green-overlay': ImageList.F3.result === 'OK', 'red-overlay': ImageList.F3.result === 'NG' }"></div>
+            <div v-if="!isModalOpen" class="background-overlay" id="F3" @click="OpenModal" :class="{ 'green-overlay': ImageList.F3.result === 'OK', 'red-overlay': ImageList.F3.result === 'NG', 'none-overlay': ImageList.F3.result !== 'OK' && ImageList.F3.result !== 'NG' }"></div>
           </div>
           <div class="image-container">
             <img v-if="ImageList.F4.status" id="F4" class="fill-image" :src="ImageList.F4.imagepath" @click="OpenModal" />
             <div v-else class="blank-image"> F4</div>
-            <div v-if="!isModalOpen" class="background-overlay" id="F4" @click="OpenModal" :class="{ 'green-overlay': ImageList.F4.result === 'OK', 'red-overlay': ImageList.F4.result === 'NG' }"></div>
+            <div v-if="!isModalOpen" class="background-overlay" id="F4" @click="OpenModal" :class="{ 'green-overlay': ImageList.F4.result === 'OK', 'red-overlay': ImageList.F4.result === 'NG', 'none-overlay': ImageList.F4.result !== 'OK' && ImageList.F4.result !== 'NG' }"></div>
           </div>
           <div class="image-container">
             <img v-if="ImageList.F5.status" id="F5" class="fill-image" :src="ImageList.F5.imagepath" @click="OpenModal" />
             <div v-else class="blank-image"> F5</div>
-            <div v-if="!isModalOpen" class="background-overlay" id="F5" @click="OpenModal" :class="{ 'green-overlay': ImageList.F5.result === 'OK', 'red-overlay': ImageList.F5.result === 'NG' }"></div>
+            <div v-if="!isModalOpen" class="background-overlay" id="F5" @click="OpenModal" :class="{ 'green-overlay': ImageList.F5.result === 'OK', 'red-overlay': ImageList.F5.result === 'NG', 'none-overlay': ImageList.F5.result !== 'OK' && ImageList.F5.result !== 'NG' }"></div>
           </div>
           <div class="image-container">
             <img v-if="ImageList.F6.status" id="F6" class="fill-image" :src="ImageList.F6.imagepath" @click="OpenModal" />
             <div v-else class="blank-image"> F6</div>
-            <div v-if="!isModalOpen" class="background-overlay" id="F6" @click="OpenModal" :class="{ 'green-overlay': ImageList.F6.result === 'OK', 'red-overlay': ImageList.F6.result === 'NG' }"></div>
+            <div v-if="!isModalOpen" class="background-overlay" id="F6" @click="OpenModal" :class="{ 'green-overlay': ImageList.F6.result === 'OK', 'red-overlay': ImageList.F6.result === 'NG', 'none-overlay': ImageList.F6.result !== 'OK' && ImageList.F6.result !== 'NG' }"></div>
           </div>
           <div class="image-container">
             <img v-if="ImageList.F7.status" id="F7" class="fill-image" :src="ImageList.F7.imagepath" @click="OpenModal" />
             <div v-else class="blank-image"> F7</div>
-            <div v-if="!isModalOpen" class="background-overlay" id="F7" @click="OpenModal" :class="{ 'green-overlay': ImageList.F7.result === 'OK', 'red-overlay': ImageList.F7.result === 'NG' }"></div>
+            <div v-if="!isModalOpen" class="background-overlay" id="F7" @click="OpenModal" :class="{ 'green-overlay': ImageList.F7.result === 'OK', 'red-overlay': ImageList.F7.result === 'NG', 'none-overlay': ImageList.F7.result !== 'OK' && ImageList.F7.result !== 'NG' }"></div>
           </div>
         </div>
         <div style="display:flex; flex-direction: row; align-items: center;">
           <div class="image-container">
             <img v-if="ImageList.G1.status" id="G1" class="fill-image" :src="ImageList.G1.imagepath" @click="OpenModal" />
             <div v-else class="blank-image"> G1</div>
-            <div v-if="!isModalOpen" class="background-overlay" id="G1" @click="OpenModal" :class="{ 'green-overlay': ImageList.G1.result === 'OK', 'red-overlay': ImageList.G1.result === 'NG' }"></div>
+            <div v-if="!isModalOpen" class="background-overlay" id="G1" @click="OpenModal" :class="{ 'green-overlay': ImageList.G1.result === 'OK', 'red-overlay': ImageList.G1.result === 'NG', 'none-overlay': ImageList.G1.result !== 'OK' && ImageList.G1.result !== 'NG' }"></div>
           </div>
           <div class="image-container">
             <img v-if="ImageList.G2.status" id="G2" class="fill-image" :src="ImageList.G2.imagepath" @click="OpenModal" />
             <div v-else class="blank-image"> G2</div>
-            <div v-if="!isModalOpen" class="background-overlay" id="G2" @click="OpenModal" :class="{ 'green-overlay': ImageList.G2.result === 'OK', 'red-overlay': ImageList.G2.result === 'NG' }"></div>
+            <div v-if="!isModalOpen" class="background-overlay" id="G2" @click="OpenModal" :class="{ 'green-overlay': ImageList.G2.result === 'OK', 'red-overlay': ImageList.G2.result === 'NG', 'none-overlay': ImageList.G2.result !== 'OK' && ImageList.G2.result !== 'NG' }"></div>
           </div>
           <div class="image-container">
             <img v-if="ImageList.G3.status" id="G3" class="fill-image" :src="ImageList.G3.imagepath" @click="OpenModal" />
             <div v-else class="blank-image"> G3</div>
-            <div v-if="!isModalOpen" class="background-overlay" id="G3" @click="OpenModal" :class="{ 'green-overlay': ImageList.G3.result === 'OK', 'red-overlay': ImageList.G3.result === 'NG' }"></div>
+            <div v-if="!isModalOpen" class="background-overlay" id="G3" @click="OpenModal" :class="{ 'green-overlay': ImageList.G3.result === 'OK', 'red-overlay': ImageList.G3.result === 'NG', 'none-overlay': ImageList.G3.result !== 'OK' && ImageList.G3.result !== 'NG' }"></div>
           </div>
           <div class="image-container">
             <img v-if="ImageList.G4.status" id="G4" class="fill-image" :src="ImageList.G4.imagepath" @click="OpenModal" />
             <div v-else class="blank-image"> G4</div>
-            <div v-if="!isModalOpen" class="background-overlay" id="G4" @click="OpenModal" :class="{ 'green-overlay': ImageList.G4.result === 'OK', 'red-overlay': ImageList.G4.result === 'NG' }"></div>
+            <div v-if="!isModalOpen" class="background-overlay" id="G4" @click="OpenModal" :class="{ 'green-overlay': ImageList.G4.result === 'OK', 'red-overlay': ImageList.G4.result === 'NG', 'none-overlay': ImageList.G4.result !== 'OK' && ImageList.G4.result !== 'NG' }"></div>
           </div>
           <div class="image-container">
             <img v-if="ImageList.G5.status" id="G5" class="fill-image" :src="ImageList.G5.imagepath" @click="OpenModal" />
             <div v-else class="blank-image"> G5</div>
-            <div v-if="!isModalOpen" class="background-overlay" id="G5" @click="OpenModal" :class="{ 'green-overlay': ImageList.G5.result === 'OK', 'red-overlay': ImageList.G5.result === 'NG' }"></div>
+            <div v-if="!isModalOpen" class="background-overlay" id="G5" @click="OpenModal" :class="{ 'green-overlay': ImageList.G5.result === 'OK', 'red-overlay': ImageList.G5.result === 'NG', 'none-overlay': ImageList.G5.result !== 'OK' && ImageList.G5.result !== 'NG' }"></div>
           </div>
           <div class="image-container">
             <img v-if="ImageList.G6.status" id="G6" class="fill-image" :src="ImageList.G6.imagepath" @click="OpenModal" />
             <div v-else class="blank-image"> G6</div>
-            <div v-if="!isModalOpen" class="background-overlay" id="G6" @click="OpenModal" :class="{ 'green-overlay': ImageList.G6.result === 'OK', 'red-overlay': ImageList.G6.result === 'NG' }"></div>
+            <div v-if="!isModalOpen" class="background-overlay" id="G6" @click="OpenModal" :class="{ 'green-overlay': ImageList.G6.result === 'OK', 'red-overlay': ImageList.G6.result === 'NG', 'none-overlay': ImageList.G6.result !== 'OK' && ImageList.G6.result !== 'NG' }"></div>
           </div>
           <div class="image-container">
             <img v-if="ImageList.G7.status" id="G7" class="fill-image" :src="ImageList.G7.imagepath" @click="OpenModal" />
             <div v-else class="blank-image"> G7</div>
-            <div v-if="!isModalOpen" class="background-overlay" id="G7" @click="OpenModal" :class="{ 'green-overlay': ImageList.G7.result === 'OK', 'red-overlay': ImageList.G7.result === 'NG' }"></div>
+            <div v-if="!isModalOpen" class="background-overlay" id="G7" @click="OpenModal" :class="{ 'green-overlay': ImageList.G7.result === 'OK', 'red-overlay': ImageList.G7.result === 'NG', 'none-overlay': ImageList.G7.result !== 'OK' && ImageList.G7.result !== 'NG' }"></div>
           </div>
         </div>
         <div style="display:flex; flex-direction: row; align-items: center;">
           <div class="image-container">
             <img v-if="ImageList.H1.status" id="H1" class="fill-image" :src="ImageList.H1.imagepath" @click="OpenModal" />
             <div v-else class="blank-image"> H1</div>
-            <div v-if="!isModalOpen" class="background-overlay" id="H1" @click="OpenModal" :class="{ 'green-overlay': ImageList.H1.result === 'OK', 'red-overlay': ImageList.H1.result === 'NG' }"></div>
+            <div v-if="!isModalOpen" class="background-overlay" id="H1" @click="OpenModal" :class="{ 'green-overlay': ImageList.H1.result === 'OK', 'red-overlay': ImageList.H1.result === 'NG', 'none-overlay': ImageList.H1.result !== 'OK' && ImageList.H1.result !== 'NG' }"></div>
           </div>
           <div class="image-container">
             <img v-if="ImageList.H2.status" id="H2" class="fill-image" :src="ImageList.H2.imagepath" @click="OpenModal" />
             <div v-else class="blank-image"> H2</div>
-            <div v-if="!isModalOpen" class="background-overlay" id="H2" @click="OpenModal" :class="{ 'green-overlay': ImageList.H2.result === 'OK', 'red-overlay': ImageList.H2.result === 'NG' }"></div>
+            <div v-if="!isModalOpen" class="background-overlay" id="H2" @click="OpenModal" :class="{ 'green-overlay': ImageList.H2.result === 'OK', 'red-overlay': ImageList.H2.result === 'NG', 'none-overlay': ImageList.H2.result !== 'OK' && ImageList.H2.result !== 'NG' }"></div>
           </div>
           <div class="image-container">
             <img v-if="ImageList.H3.status" id="H3" class="fill-image" :src="ImageList.H3.imagepath" @click="OpenModal" />
             <div v-else class="blank-image"> H3</div>
-            <div v-if="!isModalOpen" class="background-overlay" id="H3" @click="OpenModal" :class="{ 'green-overlay': ImageList.H3.result === 'OK', 'red-overlay': ImageList.H3.result === 'NG' }"></div>
+            <div v-if="!isModalOpen" class="background-overlay" id="H3" @click="OpenModal" :class="{ 'green-overlay': ImageList.H3.result === 'OK', 'red-overlay': ImageList.H3.result === 'NG', 'none-overlay': ImageList.H3.result !== 'OK' && ImageList.H3.result !== 'NG' }"></div>
           </div>
           <div class="image-container">
             <img v-if="ImageList.H4.status" id="H4" class="fill-image" :src="ImageList.H4.imagepath" @click="OpenModal" />
             <div v-else class="blank-image"> H4</div>
-            <div v-if="!isModalOpen" class="background-overlay" id="H4" @click="OpenModal" :class="{ 'green-overlay': ImageList.H4.result === 'OK', 'red-overlay': ImageList.H4.result === 'NG' }"></div>
+            <div v-if="!isModalOpen" class="background-overlay" id="H4" @click="OpenModal" :class="{ 'green-overlay': ImageList.H4.result === 'OK', 'red-overlay': ImageList.H4.result === 'NG', 'none-overlay': ImageList.H4.result !== 'OK' && ImageList.H4.result !== 'NG' }"></div>
           </div>
           <div class="image-container">
             <img v-if="ImageList.H5.status" id="H5" class="fill-image" :src="ImageList.H5.imagepath" @click="OpenModal" />
             <div v-else class="blank-image"> H5</div>
-            <div v-if="!isModalOpen" class="background-overlay" id="H5" @click="OpenModal" :class="{ 'green-overlay': ImageList.H5.result === 'OK', 'red-overlay': ImageList.H5.result === 'NG' }"></div>
+            <div v-if="!isModalOpen" class="background-overlay" id="H5" @click="OpenModal" :class="{ 'green-overlay': ImageList.H5.result === 'OK', 'red-overlay': ImageList.H5.result === 'NG', 'none-overlay': ImageList.H5.result !== 'OK' && ImageList.H5.result !== 'NG' }"></div>
           </div>
           <div class="image-container">
             <img v-if="ImageList.H6.status" id="H6" class="fill-image" :src="ImageList.H6.imagepath" @click="OpenModal" />
             <div v-else class="blank-image"> H6</div>
-            <div v-if="!isModalOpen" class="background-overlay" id="H6" @click="OpenModal" :class="{ 'green-overlay': ImageList.H6.result === 'OK', 'red-overlay': ImageList.H6.result === 'NG' }"></div>
+            <div v-if="!isModalOpen" class="background-overlay" id="H6" @click="OpenModal" :class="{ 'green-overlay': ImageList.H6.result === 'OK', 'red-overlay': ImageList.H6.result === 'NG', 'none-overlay': ImageList.H6.result !== 'OK' && ImageList.H6.result !== 'NG' }"></div>
           </div>
           <div class="image-container">
             <img v-if="ImageList.H7.status" id="H7" class="fill-image" :src="ImageList.H7.imagepath" @click="OpenModal" />
             <div v-else class="blank-image"> H7</div>
-            <div v-if="!isModalOpen" class="background-overlay" id="H7" @click="OpenModal" :class="{ 'green-overlay': ImageList.H7.result === 'OK', 'red-overlay': ImageList.H7.result === 'NG' }"></div>
+            <div v-if="!isModalOpen" class="background-overlay" id="H7" @click="OpenModal" :class="{ 'green-overlay': ImageList.H7.result === 'OK', 'red-overlay': ImageList.H7.result === 'NG', 'none-overlay': ImageList.H7.result !== 'OK' && ImageList.H7.result !== 'NG' }"></div>
           </div>
         </div>
       </div>
@@ -433,6 +433,14 @@ export default{
         H7: { status: false, imagepath_origin: "", imagepath: "", maskpath_origin: "", maskpath: "", result: null},
       },
 
+      Summary: {
+        serialNo: "-",
+        date: "-",
+        time: "-",
+        uncertainty: "-",
+        result: "-",
+
+      },
       config : null,
 
       SelectedImage: null,
@@ -455,8 +463,9 @@ export default{
       };
 
       eventSource.onmessage = (event) => {
-        console.log("ahah")
+        console.log(event)
         var validJSONstring = event.data.replace(/'/g, '"');
+        validJSONstring = validJSONstring.replace(/None/g, 'null');
         const data = JSON.parse(validJSONstring); // 받은 데이터를 JSON 형태로 파싱합니다.
         this.update_section(data);
       };
@@ -507,6 +516,12 @@ export default{
       }
     },
     update_section(data) {
+      this.Summary.date = data.date
+      this.Summary.time = data.time
+      this.Summary.uncertainty = data.uncertainty == null ? "-" : data.uncertainty
+      this.Summary.result = data.result == null ? "-" : data.result
+
+
       let section_id_front = this.set_section(data)
       if(section_id_front == "A1") {
         this.initialize()
@@ -514,7 +529,7 @@ export default{
       this.ImageList[section_id_front].imagepath_origin = data.image_path
       this.ImageList[section_id_front].imagepath = "../project/" +data.image_path.split('/').slice(3).join('/')
       this.ImageList[section_id_front].maskpath_origin = data.mask_path
-      this.ImageList[section_id_front].maskpath = data.mask_path.split('/').slice(3).join('/')
+      this.ImageList[section_id_front].maskpath = data.mask_path != null ? data.mask_path.split('/').slice(3).join('/') : null
       this.ImageList[section_id_front].result = data.result
       this.ImageList[section_id_front].status = true
 
@@ -527,8 +542,6 @@ export default{
       // this.ImageList[section_id_front].status = true
 
 
-
-      console.log(this.ImageList[section_id_front])
     },
     set_section(data) {
       var row_num = Math.floor( (parseInt(data.section_id)-1) / 7)
@@ -588,6 +601,7 @@ export default{
     },
     closeModal(){
       this.isModalOpen = false;
+      this.isMaskSwitch = false
     },
 
     click_start() {
@@ -834,6 +848,9 @@ export default{
   height: 100%;
   opacity: 0.3;
   z-index: 1;
+}
+.none-overlay{
+  background-color: rgba(0,0,0,0);
 }
 .green-overlay{
   background-color: green;

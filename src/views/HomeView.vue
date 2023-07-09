@@ -1,7 +1,7 @@
 <template>
-  <div class="home">
+  <div class="home" style="display:flex; flex-direction: row; justify-content: flex-start;">
     <img alt="Vue logo" src="../assets/logo.png" />
-    <!-- <HelloWorld msg="Welcome to Your Vue.js App" /> -->
+
   </div>
 </template>
 

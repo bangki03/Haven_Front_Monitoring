@@ -110,20 +110,12 @@ export default{
         initCanvas() {
             let canvas = document.getElementById("editor");
             this.paper.setup(canvas);
-            this.paper.view.viewSize = [
-                // this.paper.view.size.width,
-                window.innerWidth,
-                // 1296,
-                window.innerHeight
-            ];
+            this.paper.view.viewSize = [canvas.offsetWidth, canvas.offsetHeight];
 
             this.paper.activate();
             // this.image.url = this.image_meta.imagepath_img
             // console.log("this.image.url : " + this.image.url)
             this.image.raster = new paper.Raster(this.image.url);
-
-            const maskImage = new Image();
-            maskImage.src = this.mask.url;
 
             this.image.raster.onLoad = () => {
                 console.log('[initCanvas] - onloaded')
@@ -141,33 +133,7 @@ export default{
 
                 tempCtx.drawImage(this.image.raster.image, 0, 0, width, height);
 
-                maskImage.onLoad = () => {
-                    console.log('maskImage onload')
-                    tempCtx.globalAlpha = 0.9; // 투명도 조절 값 (0.0 ~ 1.0)
-                    tempCtx.drawImage(maskImage, 0, 0, width, height);
-                }
-
                 this.image.data = tempCtx.getImageData(0, 0, width, height);
-                let fontSize = width * 0.025;
-
-                let positionTopLeft = new paper.Point(
-                    -width / 2,
-                    -height / 2 - fontSize * 0.5
-                );
-                this.text.topLeft = new paper.PointText(positionTopLeft);
-                this.text.topLeft.fontSize = fontSize;
-                this.text.topLeft.fillColor = "black";
-                this.text.topLeft.content = this.image.url;
-
-                // let positionTopRight = new paper.Point(
-                //     width / 2,
-                //     -height / 2 - fontSize * 0.4
-                // );
-                // this.text.topRight = new paper.PointText(positionTopRight);
-                // this.text.topRight.justification = "right";
-                // this.text.topRight.fontSize = fontSize;
-                // this.text.topRight.fillColor = "black";
-                // this.text.topRight.content = width + "x" + height;
 
             };
         },
@@ -182,8 +148,8 @@ export default{
             // ];
             this.paper.view.viewSize = [canvas.offsetWidth, canvas.offsetHeight];
 
-            console.log("canvas.offsetWidth: ", canvas.offsetWidth)
-            console.log("canvas.offsetHeight: ", canvas.offsetHeight)
+            // console.log("canvas.offsetWidth: ", canvas.offsetWidth)
+            // console.log("canvas.offsetHeight: ", canvas.offsetHeight)
 
 
             let imageLayer = new paper.Layer(); // 이미지를 그릴 레이어
@@ -271,7 +237,7 @@ export default{
             let delta = new paper.Point(0.5 * e.deltaY, 0);
             this.paper.view.setCenter(view.center.add(delta));
             } else {
-            console.log("onWheel - else(ctrlkey)")
+            // console.log("onWheel - else(ctrlkey)")
             let viewPosition = view.viewToProject(
                 new paper.Point(e.offsetX, e.offsetY)
             );
@@ -323,8 +289,9 @@ export default{
 
         // 서버 TEST용
         // "../project/" +data.image_path.split('/').slice(3).join('/')
-        this.image.url = "../project/40/data/2023-06-22/17-16-01/2023-06-22_17-16-01_29image.jpg"
-        this.mask.url = "../project/40/data/2023-06-22/17-16-01/2023-06-22_17-16-01_29mask.jpg"
+        // this.image.url = "../project/40/data/2023-06-22/17-16-01/2023-06-22_17-16-01_29image.jpg"
+        // this.mask.url = "../project/40/data/2023-06-22/17-16-01/2023-06-22_17-16-01_29mask.jpg"
+        console.log("created")
 
         console.log("set image url: ", this.image.url)
         console.log("set mask url: ", this.mask.url)
@@ -332,7 +299,12 @@ export default{
 
     mounted() {
         this.$nextTick(() => {
-            this.initCanvas_with_Mask()
+            if(this.mask.url == null) {
+                this.initCanvas()
+            }
+            else {
+                this.initCanvas_with_Mask()
+            }
         })
     },
 }
