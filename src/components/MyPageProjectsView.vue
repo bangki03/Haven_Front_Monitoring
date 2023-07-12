@@ -13,7 +13,7 @@
 
     <div class="my-container" style="display:flex; overflow-x: auto; width:100%; height:85%; flex-wrap: nowrap; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch;">
         <div v-for="(myProject) in this.myProjectList" :key="myProject" style="height:85%; padding: 0 0.5em; flex: 0 0 24%; scroll-snap-align : start">
-            <MyPageProjectsCard @click="click_ProjectCard(myProject)" :project_SummaryCard="myProject"/>
+            <MyPageProjectsCard :myProject="myProject"/>
         </div>
         <div style="height:85%; padding: 0 0.5em; flex: 0 0 24%;">
             <MyPageProjectsCreateCard @click="openModal" ref="mymodal" @blur="closeModal"></MyPageProjectsCreateCard>

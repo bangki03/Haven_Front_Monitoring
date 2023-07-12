@@ -193,7 +193,8 @@ export default{
 
                     this.mask.raster.putImageData(pixelData)
                     maskLayer.addChild(this.mask.raster)
-                    this.mask.raster.opacity = 0;
+                    // this.mask.raster.opacity = 0.5;
+                    this.mask.raster.opacity = this.isMaskSwitch ? 0.5 : 0;
 
                     imageLayer.position = new paper.Point(0, 0);
                     maskLayer.position = new paper.Point(0, 0);

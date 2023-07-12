@@ -6,7 +6,7 @@
 
     <div class="dard-container" style="width:98%;  display:flex; flex-direction: column; justify-content: flex-start;">
       <div class="dard-header" style="display:flex; flex-direction: row; justify-content:flex-start; align-items: center; " >
-        <div v-show="isModalOpen" id="btn-back" @click="closeModal" style="margin-left:1.0em;">
+        <div v-show="isModalOpen" id="btn-back" @click="closeModal" style="margin-left:1.0em; cursor: pointer;">
           <i id="arrow-previous" class="fa fa-arrow-left image-arrows" style="font-size: 15px; transform: scaleX(1); color: white;"/> 뒤로가기
         </div>
         <div v-show="isModalOpen" class="form-check form-switch" style="margin-left: auto; margin-right:1.0em; display:flex; align-items:center;">
@@ -375,62 +375,62 @@ export default{
   data() {
     return {
       ImageList: {
-        A1: { status: false, imagepath_origin: "", imagepath: "", maskpath_origin: "", maskpath: "", result: null},
-        A2: { status: false, imagepath_origin: "", imagepath: "", maskpath_origin: "", maskpath: "", result: null},
-        A3: { status: false, imagepath_origin: "", imagepath: "", maskpath_origin: "", maskpath: "", result: null},
-        A4: { status: false, imagepath_origin: "", imagepath: "", maskpath_origin: "", maskpath: "", result: null},
-        A5: { status: false, imagepath_origin: "", imagepath: "", maskpath_origin: "", maskpath: "", result: null},
-        A6: { status: false, imagepath_origin: "", imagepath: "", maskpath_origin: "", maskpath: "", result: null},
-        A7: { status: false, imagepath_origin: "", imagepath: "", maskpath_origin: "", maskpath: "", result: null},
-        B1: { status: false, imagepath_origin: "", imagepath: "", maskpath_origin: "", maskpath: "", result: null},
-        B2: { status: false, imagepath_origin: "", imagepath: "", maskpath_origin: "", maskpath: "", result: null},
-        B3: { status: false, imagepath_origin: "", imagepath: "", maskpath_origin: "", maskpath: "", result: null},
-        B4: { status: false, imagepath_origin: "", imagepath: "", maskpath_origin: "", maskpath: "", result: null},
-        B5: { status: false, imagepath_origin: "", imagepath: "", maskpath_origin: "", maskpath: "", result: null},
-        B6: { status: false, imagepath_origin: "", imagepath: "", maskpath_origin: "", maskpath: "", result: null},
-        B7: { status: false, imagepath_origin: "", imagepath: "", maskpath_origin: "", maskpath: "", result: null},
-        C1: { status: false, imagepath_origin: "", imagepath: "", maskpath_origin: "", maskpath: "", result: null},
-        C2: { status: false, imagepath_origin: "", imagepath: "", maskpath_origin: "", maskpath: "", result: null},
-        C3: { status: false, imagepath_origin: "", imagepath: "", maskpath_origin: "", maskpath: "", result: null},
-        C4: { status: false, imagepath_origin: "", imagepath: "", maskpath_origin: "", maskpath: "", result: null},
-        C5: { status: false, imagepath_origin: "", imagepath: "", maskpath_origin: "", maskpath: "", result: null},
-        C6: { status: false, imagepath_origin: "", imagepath: "", maskpath_origin: "", maskpath: "", result: null},
-        C7: { status: false, imagepath_origin: "", imagepath: "", maskpath_origin: "", maskpath: "", result: null},
-        D1: { status: false, imagepath_origin: "", imagepath: "", maskpath_origin: "", maskpath: "", result: null},
-        D2: { status: false, imagepath_origin: "", imagepath: "", maskpath_origin: "", maskpath: "", result: null},
-        D3: { status: false, imagepath_origin: "", imagepath: "", maskpath_origin: "", maskpath: "", result: null},
-        D4: { status: false, imagepath_origin: "", imagepath: "", maskpath_origin: "", maskpath: "", result: null},
-        D5: { status: false, imagepath_origin: "", imagepath: "", maskpath_origin: "", maskpath: "", result: null},
-        D6: { status: false, imagepath_origin: "", imagepath: "", maskpath_origin: "", maskpath: "", result: null},
-        D7: { status: false, imagepath_origin: "", imagepath: "", maskpath_origin: "", maskpath: "", result: null},
-        E1: { status: false, imagepath_origin: "", imagepath: "", maskpath_origin: "", maskpath: "", result: null},
-        E2: { status: false, imagepath_origin: "", imagepath: "", maskpath_origin: "", maskpath: "", result: null},
-        E3: { status: false, imagepath_origin: "", imagepath: "", maskpath_origin: "", maskpath: "", result: null},
-        E4: { status: false, imagepath_origin: "", imagepath: "", maskpath_origin: "", maskpath: "", result: null},
-        E5: { status: false, imagepath_origin: "", imagepath: "", maskpath_origin: "", maskpath: "", result: null},
-        E6: { status: false, imagepath_origin: "", imagepath: "", maskpath_origin: "", maskpath: "", result: null},
-        E7: { status: false, imagepath_origin: "", imagepath: "", maskpath_origin: "", maskpath: "", result: null},
-        F1: { status: false, imagepath_origin: "", imagepath: "", maskpath_origin: "", maskpath: "", result: null},
-        F2: { status: false, imagepath_origin: "", imagepath: "", maskpath_origin: "", maskpath: "", result: null},
-        F3: { status: false, imagepath_origin: "", imagepath: "", maskpath_origin: "", maskpath: "", result: null},
-        F4: { status: false, imagepath_origin: "", imagepath: "", maskpath_origin: "", maskpath: "", result: null},
-        F5: { status: false, imagepath_origin: "", imagepath: "", maskpath_origin: "", maskpath: "", result: null},
-        F6: { status: false, imagepath_origin: "", imagepath: "", maskpath_origin: "", maskpath: "", result: null},
-        F7: { status: false, imagepath_origin: "", imagepath: "", maskpath_origin: "", maskpath: "", result: null},
-        G1: { status: false, imagepath_origin: "", imagepath: "", maskpath_origin: "", maskpath: "", result: null},
-        G2: { status: false, imagepath_origin: "", imagepath: "", maskpath_origin: "", maskpath: "", result: null},
-        G3: { status: false, imagepath_origin: "", imagepath: "", maskpath_origin: "", maskpath: "", result: null},
-        G4: { status: false, imagepath_origin: "", imagepath: "", maskpath_origin: "", maskpath: "", result: null},
-        G5: { status: false, imagepath_origin: "", imagepath: "", maskpath_origin: "", maskpath: "", result: null},
-        G6: { status: false, imagepath_origin: "", imagepath: "", maskpath_origin: "", maskpath: "", result: null},
-        G7: { status: false, imagepath_origin: "", imagepath: "", maskpath_origin: "", maskpath: "", result: null},
-        H1: { status: false, imagepath_origin: "", imagepath: "", maskpath_origin: "", maskpath: "", result: null},
-        H2: { status: false, imagepath_origin: "", imagepath: "", maskpath_origin: "", maskpath: "", result: null},
-        H3: { status: false, imagepath_origin: "", imagepath: "", maskpath_origin: "", maskpath: "", result: null},
-        H4: { status: false, imagepath_origin: "", imagepath: "", maskpath_origin: "", maskpath: "", result: null},
-        H5: { status: false, imagepath_origin: "", imagepath: "", maskpath_origin: "", maskpath: "", result: null},
-        H6: { status: false, imagepath_origin: "", imagepath: "", maskpath_origin: "", maskpath: "", result: null},
-        H7: { status: false, imagepath_origin: "", imagepath: "", maskpath_origin: "", maskpath: "", result: null},
+        A1: { status: false, imagepath_origin: "", imagepath: "", maskpath_origin: "", maskpath: "", date: "", time: "", uncertainty: "", result: null},
+        A2: { status: false, imagepath_origin: "", imagepath: "", maskpath_origin: "", maskpath: "", date: "", time: "", uncertainty: "", result: null},
+        A3: { status: false, imagepath_origin: "", imagepath: "", maskpath_origin: "", maskpath: "", date: "", time: "", uncertainty: "", result: null},
+        A4: { status: false, imagepath_origin: "", imagepath: "", maskpath_origin: "", maskpath: "", date: "", time: "", uncertainty: "", result: null},
+        A5: { status: false, imagepath_origin: "", imagepath: "", maskpath_origin: "", maskpath: "", date: "", time: "", uncertainty: "", result: null},
+        A6: { status: false, imagepath_origin: "", imagepath: "", maskpath_origin: "", maskpath: "", date: "", time: "", uncertainty: "", result: null},
+        A7: { status: false, imagepath_origin: "", imagepath: "", maskpath_origin: "", maskpath: "", date: "", time: "", uncertainty: "", result: null},
+        B1: { status: false, imagepath_origin: "", imagepath: "", maskpath_origin: "", maskpath: "", date: "", time: "", uncertainty: "", result: null},
+        B2: { status: false, imagepath_origin: "", imagepath: "", maskpath_origin: "", maskpath: "", date: "", time: "", uncertainty: "", result: null},
+        B3: { status: false, imagepath_origin: "", imagepath: "", maskpath_origin: "", maskpath: "", date: "", time: "", uncertainty: "", result: null},
+        B4: { status: false, imagepath_origin: "", imagepath: "", maskpath_origin: "", maskpath: "", date: "", time: "", uncertainty: "", result: null},
+        B5: { status: false, imagepath_origin: "", imagepath: "", maskpath_origin: "", maskpath: "", date: "", time: "", uncertainty: "", result: null},
+        B6: { status: false, imagepath_origin: "", imagepath: "", maskpath_origin: "", maskpath: "", date: "", time: "", uncertainty: "", result: null},
+        B7: { status: false, imagepath_origin: "", imagepath: "", maskpath_origin: "", maskpath: "", date: "", time: "", uncertainty: "", result: null},
+        C1: { status: false, imagepath_origin: "", imagepath: "", maskpath_origin: "", maskpath: "", date: "", time: "", uncertainty: "", result: null},
+        C2: { status: false, imagepath_origin: "", imagepath: "", maskpath_origin: "", maskpath: "", date: "", time: "", uncertainty: "", result: null},
+        C3: { status: false, imagepath_origin: "", imagepath: "", maskpath_origin: "", maskpath: "", date: "", time: "", uncertainty: "", result: null},
+        C4: { status: false, imagepath_origin: "", imagepath: "", maskpath_origin: "", maskpath: "", date: "", time: "", uncertainty: "", result: null},
+        C5: { status: false, imagepath_origin: "", imagepath: "", maskpath_origin: "", maskpath: "", date: "", time: "", uncertainty: "", result: null},
+        C6: { status: false, imagepath_origin: "", imagepath: "", maskpath_origin: "", maskpath: "", date: "", time: "", uncertainty: "", result: null},
+        C7: { status: false, imagepath_origin: "", imagepath: "", maskpath_origin: "", maskpath: "", date: "", time: "", uncertainty: "", result: null},
+        D1: { status: false, imagepath_origin: "", imagepath: "", maskpath_origin: "", maskpath: "", date: "", time: "", uncertainty: "", result: null},
+        D2: { status: false, imagepath_origin: "", imagepath: "", maskpath_origin: "", maskpath: "", date: "", time: "", uncertainty: "", result: null},
+        D3: { status: false, imagepath_origin: "", imagepath: "", maskpath_origin: "", maskpath: "", date: "", time: "", uncertainty: "", result: null},
+        D4: { status: false, imagepath_origin: "", imagepath: "", maskpath_origin: "", maskpath: "", date: "", time: "", uncertainty: "", result: null},
+        D5: { status: false, imagepath_origin: "", imagepath: "", maskpath_origin: "", maskpath: "", date: "", time: "", uncertainty: "", result: null},
+        D6: { status: false, imagepath_origin: "", imagepath: "", maskpath_origin: "", maskpath: "", date: "", time: "", uncertainty: "", result: null},
+        D7: { status: false, imagepath_origin: "", imagepath: "", maskpath_origin: "", maskpath: "", date: "", time: "", uncertainty: "", result: null},
+        E1: { status: false, imagepath_origin: "", imagepath: "", maskpath_origin: "", maskpath: "", date: "", time: "", uncertainty: "", result: null},
+        E2: { status: false, imagepath_origin: "", imagepath: "", maskpath_origin: "", maskpath: "", date: "", time: "", uncertainty: "", result: null},
+        E3: { status: false, imagepath_origin: "", imagepath: "", maskpath_origin: "", maskpath: "", date: "", time: "", uncertainty: "", result: null},
+        E4: { status: false, imagepath_origin: "", imagepath: "", maskpath_origin: "", maskpath: "", date: "", time: "", uncertainty: "", result: null},
+        E5: { status: false, imagepath_origin: "", imagepath: "", maskpath_origin: "", maskpath: "", date: "", time: "", uncertainty: "", result: null},
+        E6: { status: false, imagepath_origin: "", imagepath: "", maskpath_origin: "", maskpath: "", date: "", time: "", uncertainty: "", result: null},
+        E7: { status: false, imagepath_origin: "", imagepath: "", maskpath_origin: "", maskpath: "", date: "", time: "", uncertainty: "", result: null},
+        F1: { status: false, imagepath_origin: "", imagepath: "", maskpath_origin: "", maskpath: "", date: "", time: "", uncertainty: "", result: null},
+        F2: { status: false, imagepath_origin: "", imagepath: "", maskpath_origin: "", maskpath: "", date: "", time: "", uncertainty: "", result: null},
+        F3: { status: false, imagepath_origin: "", imagepath: "", maskpath_origin: "", maskpath: "", date: "", time: "", uncertainty: "", result: null},
+        F4: { status: false, imagepath_origin: "", imagepath: "", maskpath_origin: "", maskpath: "", date: "", time: "", uncertainty: "", result: null},
+        F5: { status: false, imagepath_origin: "", imagepath: "", maskpath_origin: "", maskpath: "", date: "", time: "", uncertainty: "", result: null},
+        F6: { status: false, imagepath_origin: "", imagepath: "", maskpath_origin: "", maskpath: "", date: "", time: "", uncertainty: "", result: null},
+        F7: { status: false, imagepath_origin: "", imagepath: "", maskpath_origin: "", maskpath: "", date: "", time: "", uncertainty: "", result: null},
+        G1: { status: false, imagepath_origin: "", imagepath: "", maskpath_origin: "", maskpath: "", date: "", time: "", uncertainty: "", result: null},
+        G2: { status: false, imagepath_origin: "", imagepath: "", maskpath_origin: "", maskpath: "", date: "", time: "", uncertainty: "", result: null},
+        G3: { status: false, imagepath_origin: "", imagepath: "", maskpath_origin: "", maskpath: "", date: "", time: "", uncertainty: "", result: null},
+        G4: { status: false, imagepath_origin: "", imagepath: "", maskpath_origin: "", maskpath: "", date: "", time: "", uncertainty: "", result: null},
+        G5: { status: false, imagepath_origin: "", imagepath: "", maskpath_origin: "", maskpath: "", date: "", time: "", uncertainty: "", result: null},
+        G6: { status: false, imagepath_origin: "", imagepath: "", maskpath_origin: "", maskpath: "", date: "", time: "", uncertainty: "", result: null},
+        G7: { status: false, imagepath_origin: "", imagepath: "", maskpath_origin: "", maskpath: "", date: "", time: "", uncertainty: "", result: null},
+        H1: { status: false, imagepath_origin: "", imagepath: "", maskpath_origin: "", maskpath: "", date: "", time: "", uncertainty: "", result: null},
+        H2: { status: false, imagepath_origin: "", imagepath: "", maskpath_origin: "", maskpath: "", date: "", time: "", uncertainty: "", result: null},
+        H3: { status: false, imagepath_origin: "", imagepath: "", maskpath_origin: "", maskpath: "", date: "", time: "", uncertainty: "", result: null},
+        H4: { status: false, imagepath_origin: "", imagepath: "", maskpath_origin: "", maskpath: "", date: "", time: "", uncertainty: "", result: null},
+        H5: { status: false, imagepath_origin: "", imagepath: "", maskpath_origin: "", maskpath: "", date: "", time: "", uncertainty: "", result: null},
+        H6: { status: false, imagepath_origin: "", imagepath: "", maskpath_origin: "", maskpath: "", date: "", time: "", uncertainty: "", result: null},
+        H7: { status: false, imagepath_origin: "", imagepath: "", maskpath_origin: "", maskpath: "", date: "", time: "", uncertainty: "", result: null},
       },
 
       Summary: {
@@ -449,7 +449,7 @@ export default{
       IntervalAPILoadData : null,
 
       isModalOpen: false,
-      isMaskSwitch: false,
+      isMaskSwitch: true,
     }
   },
   methods: {
@@ -516,10 +516,12 @@ export default{
       }
     },
     update_section(data) {
-      this.Summary.date = data.date
-      this.Summary.time = data.time
-      this.Summary.uncertainty = data.uncertainty == null ? "-" : data.uncertainty
-      this.Summary.result = data.result == null ? "-" : data.result
+      if(this.isModalOpen == false) {
+        this.Summary.date = data.date
+        this.Summary.time = data.time
+        this.Summary.uncertainty = data.uncertainty == null ? "-" : data.uncertainty
+        this.Summary.result = data.result == null ? "-" : data.result
+      }
 
 
       let section_id_front = this.set_section(data)
@@ -530,7 +532,10 @@ export default{
       this.ImageList[section_id_front].imagepath = "../project/" +data.image_path.split('/').slice(3).join('/')
       this.ImageList[section_id_front].maskpath_origin = data.mask_path
       this.ImageList[section_id_front].maskpath = data.mask_path != null ? data.mask_path.split('/').slice(3).join('/') : null
-      this.ImageList[section_id_front].result = data.result
+      this.ImageList[section_id_front].date = data.date
+      this.ImageList[section_id_front].time = data.time
+      this.ImageList[section_id_front].uncertainty = data.uncertainty == null ? "-" : data.uncertainty
+      this.ImageList[section_id_front].result = data.result == null ? "-" : data.result
       this.ImageList[section_id_front].status = true
 
       // Test
@@ -574,6 +579,45 @@ export default{
 
     },
 
+    getLatestImageSection() {
+      let section_first = ""
+      let section_second = ""
+      let latestkey_next = ""
+      for(let key in this.ImageList) {
+        console.log("key: ",key, "   status: ", this.ImageList[key].status)
+        if(this.ImageList[key].status == false) {
+          latestkey_next = key;
+          break
+        }
+      }
+      console.log("latestkey_next: ", latestkey_next)
+
+      if(latestkey_next == "A1") {
+        console.log("Here1")
+        return null
+      }
+      else if(latestkey_next[1] > 1) {
+        console.log("Here2")
+        section_first = latestkey_next[0]
+        section_second = latestkey_next[1] - 1
+        return section_first+section_second
+      }
+      else if(latestkey_next[1] == 1) {
+        console.log("Here3")
+        let asciiCode = latestkey_next[0].charCodeAt(0);  // ASCII 코드 값
+        let newAsciiCode = asciiCode - 1;       // 3을 뺍니다.
+        section_first = String.fromCharCode(newAsciiCode);
+
+        section_second = '7'
+        return section_first+section_second
+      }
+      else {
+        console.log("Here4")
+        return "H7"
+      }
+
+    },
+
     SwitchMonitorChange() {
       // 여기서 스위치의 상태에 따른 동작을 수행합니다.
       console.log(this.monitorSwitch)
@@ -598,10 +642,31 @@ export default{
       // this.SelectedImage.filepath_img = this.ImageList[clickedElementId].imagepath
 
       this.isModalOpen = true
+
+      this.Summary.date = this.SelectedImage.date
+      this.Summary.time = this.SelectedImage.time
+      this.Summary.uncertainty = this.SelectedImage.uncertainty
+      this.Summary.result = this.SelectedImage.result
+
     },
     closeModal(){
+      let sectionID = this.getLatestImageSection()
+      console.log("latestkey: ", sectionID)
+      if(sectionID != null) {
+        this.Summary.date = this.ImageList[sectionID].date
+        this.Summary.time = this.ImageList[sectionID].time
+        this.Summary.uncertainty = this.ImageList[sectionID].uncertainty
+        this.Summary.result = this.ImageList[sectionID].result
+      }
+      else {
+        this.Summary.date = "-"
+        this.Summary.time = "-"
+        this.Summary.uncertainty = "-"
+        this.Summary.result = "-"
+      }
+
       this.isModalOpen = false;
-      this.isMaskSwitch = false
+      this.isMaskSwitch = true;
     },
 
     click_start() {
