@@ -40,55 +40,58 @@
 
 <script>
 import $ from 'jquery';
+import axios from "axios";
 
 export default{
-props: ['account'],
-data() {
-  return {
-    registerActive: false,
-    prop_account: {
-      Email : "",
-      Password : "",
-      LoginActive : false,
-    },
-    reg_account: {
-      Email : "",
-      Name : "",
-      Password : "",
-      Password_confirm : "",
-      PhoneNumber : "",
-    },
-    emptyFields: false
-  }
-},
-computed: {
-},
-methods: {
-  saveInputValue(event){
-    if(event.target.id == "login_id") {
-      this.prop_account.Email = event.target.value
-    }
-    else if(event.target.id == "login_password") {
-      this.prop_account.Password = event.target.value
-    }
-    else if(event.target.id == "register_id") {
-      this.reg_account.Email = event.target.value
-    }
-    else if(event.target.id == "register_name") {
-      this.reg_account.Name = event.target.value
-    }
-    else if(event.target.id == "register_password") {
-      this.reg_account.Password = event.target.value
-    }
-    else if(event.target.id == "register_passwordconfirm") {
-      this.reg_account.Password_confirm = event.target.value
-    }
-    else if(event.target.id == "register_phonenNo") {
-      this.reg_account.PhoneNumber = event.target.value
-    }
+  props: ['account'],
+  data() {
+    return {
+      registerActive: false,
+      prop_account: {
+        Email : "",
+        Password : "",
+        LoginActive : false,
+      },
+      reg_account: {
+        Email : "",
+        Name : "",
+        Password : "",
+        Password_confirm : "",
+        PhoneNumber : "",
+      },
+      emptyFields: false,
 
+      config : null,
+    }
   },
-  doLogin() {
+  computed: {
+  },
+  methods: {
+    saveInputValue(event){
+      if(event.target.id == "login_id") {
+        this.prop_account.Email = event.target.value
+      }
+      else if(event.target.id == "login_password") {
+        this.prop_account.Password = event.target.value
+      }
+      else if(event.target.id == "register_id") {
+        this.reg_account.Email = event.target.value
+      }
+      else if(event.target.id == "register_name") {
+        this.reg_account.Name = event.target.value
+      }
+      else if(event.target.id == "register_password") {
+        this.reg_account.Password = event.target.value
+      }
+      else if(event.target.id == "register_passwordconfirm") {
+        this.reg_account.Password_confirm = event.target.value
+      }
+      else if(event.target.id == "register_phonenNo") {
+        this.reg_account.PhoneNumber = event.target.value
+      }
+
+    },
+    doLogin() {
       if (this.prop_account.email === "" || this.prop_account.password === "") {
           this.emptyFields = true;
       }
@@ -97,7 +100,7 @@ methods: {
       }
     },
 
-  doRegister() {
+    doRegister() {
       if (this.reg_account.Email === "" || this.reg_account.Name === "" || this.reg_account.Password === "" || this.reg_account.Password_confirm === "" || this.reg_account.PhoneNumber === "") {
         this.emptyFields = true;
         console.log("this.reg_account.Email: ",this.reg_account.Email)
@@ -109,109 +112,122 @@ methods: {
       } else {
         this.post_register_account()
       }
-  },
+    },
 
-  // setLogin() {
-  //   this.prop_account.LoginActive = true;
-  //   this.$emit('setLogin', this.prop_account);
-  // },
+    // setLogin() {
+    //   this.prop_account.LoginActive = true;
+    //   this.$emit('setLogin', this.prop_account);
+    // },
 
-  //  API 내놔~
-  get_Login() {
-    $.ajax({
-        url: "http://183.105.120.175:30004/user/login", // 클라이언트가 HTTP 요청을 보낼 서버의 URL 주소
-        method: "GET",   // HTTP 요청 메소드(GET, POST 등)
-        dataType: "json", // 서버에서 보내줄 데이터의 타입
-        data: {
-            email: this.prop_account.Email,
-            password: this.prop_account.Password,
-        },  // HTTP 요청과 함께 서버로 보낼 데이터
-    })
-    .then( data => {
-        if(data.code == '200' && data.message=='login success'){
-          this.get_UserID()
+    //  API 내놔~
+    get_Login() {
+      $.ajax({
+          url: this.config.get_login, // 클라이언트가 HTTP 요청을 보낼 서버의 URL 주소
+          method: "GET",   // HTTP 요청 메소드(GET, POST 등)
+          dataType: "json", // 서버에서 보내줄 데이터의 타입
+          data: {
+              email: this.prop_account.Email,
+              password: this.prop_account.Password,
+          },  // HTTP 요청과 함께 서버로 보낼 데이터
+      })
+      .then( data => {
+          if(data.code == '200' && data.message=='login success'){
+            this.get_UserID()
 
+          }
+          else {
+            alert('Login Failed')
+          }
+      })
+    },
+
+    get_UserID() {
+      $.ajax({
+          url: this.config.get_user, // 클라이언트가 HTTP 요청을 보낼 서버의 URL 주소
+          method: "GET",   // HTTP 요청 메소드(GET, POST 등)
+          dataType: "json", // 서버에서 보내줄 데이터의 타입
+          data: {
+              user_email: this.prop_account.Email,
+          },  // HTTP 요청과 함께 서버로 보낼 데이터
+      })
+      .then( data => {
+        this.$store.commit("setLogin", this.prop_account);
+        this.$store.commit("setUserID", data)
+        this.$store.commit("saveSessionStorageLogin")
+        console.log("Login")
+        this.$router.push('/mypage')
+      })
+    },
+
+
+    post_register_account() {
+      console.log(this.config)
+      fetch(this.config.create_user, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: this.reg_account.Email,
+          password: this.reg_account.Password,
+          name: this.reg_account.Name,
+          phone_number: this.reg_account.PhoneNumber,
+        }),
+      }).then( data => {
+        if(data.status == '200'){
+          alert("회원 가입 되었습니다. 다시 로그인 해주세요!");
+          this.$router.go();
         }
-        else {
-          alert('Login Failed')
-        }
-    })
+      });
+
+    },
+
+    // put_deployed(item) {
+    //   fetch(this.API_List.ai_model_deploy + String(item.id), {
+    //       method: "PUT",   // HTTP 요청 메소드(GET, POST 등)
+    //       headers: {"Content-Type": "application/json"},
+    //       body: JSON.stringify({
+    //           ckpt_file_path: item.FilePath,
+    //           score: item.Score,
+    //           deploy_status: "deployed",
+    //           create_time: item.CreateTime_origin,
+    //           }), //전송 데이터
+    //   })
+    // },
+
+    // get_AIModelList() {
+    //   $.ajax({
+    //       //quality-improvement?page=1&size=50
+    //       url: this.API_List.quality_improvement, // 클라이언트가 HTTP 요청을 보낼 서버의 URL 주소
+    //       method: "GET",   // HTTP 요청 메소드(GET, POST 등)
+    //       dataType: "json", // 서버에서 보내줄 데이터의 타입
+    //       data: {
+    //           page: (this.pagination.num_start-1)/this.pagination.size + 1,
+    //           size: this.pagination.size,
+    //       },  // HTTP 요청과 함께 서버로 보낼 데이터
+    //   })
+    //   .then( (data, res) => {
+    //       this.AIModelList = this.Format_AIModelList(data.items)
+    //       this.AIModelList.total = data.total
+    //       this.check_Previous_State()
+    //       this.check_Next_State()
+    //   })
+    // },
+    set_config() {
+      return axios.get('/config.json')
+      .then(response => {
+        this.config = response.data;
+      })
+      .catch(error => {
+        console.log(error);
+      });
+    },
+
   },
-
-  get_UserID() {
-    $.ajax({
-        url: "http://183.105.120.175:30004/user", // 클라이언트가 HTTP 요청을 보낼 서버의 URL 주소
-        method: "GET",   // HTTP 요청 메소드(GET, POST 등)
-        dataType: "json", // 서버에서 보내줄 데이터의 타입
-        data: {
-            user_email: this.prop_account.Email,
-        },  // HTTP 요청과 함께 서버로 보낼 데이터
-    })
-    .then( data => {
-      this.$store.commit("setLogin", this.prop_account);
-      this.$store.commit("setUserID", data)
-      this.$store.commit("saveSessionStorageLogin")
-      console.log("Login")
-      this.$router.push('/mypage')
-    })
+  
+  created() {
+    this.set_config()
   },
-
-
-  post_register_account() {
-    fetch("http://183.105.120.175:30004/user", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email: this.reg_account.Email,
-        password: this.reg_account.Password,
-        name: this.reg_account.Name,
-        phone_number: this.reg_account.PhoneNumber,
-      }),
-    }).then( data => {
-      if(data.status == '200'){
-        alert("회원 가입 되었습니다. 다시 로그인 해주세요!");
-        this.$router.go();
-      }
-    });
-
-  },
-
-  // put_deployed(item) {
-  //   fetch(this.API_List.ai_model_deploy + String(item.id), {
-  //       method: "PUT",   // HTTP 요청 메소드(GET, POST 등)
-  //       headers: {"Content-Type": "application/json"},
-  //       body: JSON.stringify({
-  //           ckpt_file_path: item.FilePath,
-  //           score: item.Score,
-  //           deploy_status: "deployed",
-  //           create_time: item.CreateTime_origin,
-  //           }), //전송 데이터
-  //   })
-  // },
-
-  // get_AIModelList() {
-  //   $.ajax({
-  //       //quality-improvement?page=1&size=50
-  //       url: this.API_List.quality_improvement, // 클라이언트가 HTTP 요청을 보낼 서버의 URL 주소
-  //       method: "GET",   // HTTP 요청 메소드(GET, POST 등)
-  //       dataType: "json", // 서버에서 보내줄 데이터의 타입
-  //       data: {
-  //           page: (this.pagination.num_start-1)/this.pagination.size + 1,
-  //           size: this.pagination.size,
-  //       },  // HTTP 요청과 함께 서버로 보낼 데이터
-  //   })
-  //   .then( (data, res) => {
-  //       this.AIModelList = this.Format_AIModelList(data.items)
-  //       this.AIModelList.total = data.total
-  //       this.check_Previous_State()
-  //       this.check_Next_State()
-  //   })
-  // },
-
-
-}
 }
 </script>
 

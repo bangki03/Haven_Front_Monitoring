@@ -62,7 +62,7 @@
 
 <script>
 import $ from 'jquery';
-
+import axios from "axios";
 
 export default{
    props: {
@@ -93,7 +93,9 @@ export default{
             project_script : "",
          },
          emptyFields: false,
-         Project_typelist : ["Classification", "Detection", "Segmentation"]
+         Project_typelist : ["Classification", "Detection", "Segmentation"],
+
+         config: null,
       }
    },
 
@@ -160,7 +162,7 @@ export default{
 
       patch_edit_project() {
          console.log(this.$store.state.account.User_ID)
-         fetch("http://183.105.120.175:30004/project/" + this.myProject.id, {
+         fetch(this.config.update_project + this.myProject.id, {
          method: "PATCH",
          headers: {
             "Content-Type": "application/json",
@@ -186,9 +188,19 @@ export default{
       setInfo() {
          this.project_info = this.myProject
          this.selectProjectType(this.myProject.project_type)
-      }
+      },
+      set_config() {
+         return axios.get('/config.json')
+         .then(response => {
+         this.config = response.data;
+         })
+         .catch(error => {
+         console.log(error);
+         });
+      },
    },
    created() {
+      this.set_config()
       this.setInfo()
    },
    mounted() {

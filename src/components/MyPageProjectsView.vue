@@ -41,6 +41,7 @@ import MyPageProjectsCreateCard from "@/components/MyPageProjectsCreateCard.vue"
 import MyPageProjectsCreateModal from "@/components/MyPageProjectsCreateModal.vue"
 
 import $ from 'jquery';
+import axios from "axios";
 
 export default {
     components: {
@@ -51,7 +52,9 @@ export default {
     data() {
         return {
             iscreateProjectOpen: false,
-            myProjectList: []
+            myProjectList: [],
+
+            config: null,
         }
     },
 
@@ -88,8 +91,9 @@ export default {
         },
 
         get_ProjectList() {
+            console.log(this.config.get_projectlist)
             $.ajax({
-                url: "http://183.105.120.175:30004/project", // 클라이언트가 HTTP 요청을 보낼 서버의 URL 주소
+                url: this.config.get_projectlist, // 클라이언트가 HTTP 요청을 보낼 서버의 URL 주소
                 method: "GET",   // HTTP 요청 메소드(GET, POST 등)
                 dataType: "json", // 서버에서 보내줄 데이터의 타입
                 data: {
@@ -104,9 +108,22 @@ export default {
             })
         },
 
+        set_config() {
+            return axios.get('/config.json')
+            .then(response => {
+                this.config = response.data;
+            })
+            .catch(error => {
+                console.log(error);
+            });
+        },
+
     },
-    mounted() {
-        this.get_ProjectList()
+    created() {
+        this.set_config()
+        .then(() => {
+            this.get_ProjectList()
+        })
     },
 }
 </script>

@@ -10,15 +10,14 @@
         style="height: 58.9px; width: 176px; padding: 0;"
       />
       <p style="margin-left: auto; margin-right:0.5em; height: 1.5rem; margin-bottom: 0; cursor: pointer;" @mouseenter="showrevision = true" @mouseleave="showrevision = false">
-        Version : A.07 / Relase Date : 23.07.12 19:40</p>
+        Version : A.08 / Relase Date : 23.07.13 01:20</p>
       <div v-if=showrevision class="revision">
         <br>
-        Version : A.07<br>
-        Relase Date : 23.07.12 19:40<br>
+        Version : A.08<br>
+        Relase Date : 23.07.13 01:20<br>
         <br>
-        [MonitoringView]<br>
-        - application_status 500ms 주기로 요청<br>
-        - 검사시작/중지 버튼 통합<br>
+        [MyPageView]<br>
+        - 활용, 알림, 소식 더미 내용 삭제<br>
         <br>
       </div>
     </div>

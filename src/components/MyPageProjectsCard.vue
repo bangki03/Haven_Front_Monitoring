@@ -77,6 +77,7 @@
 </template>
 
 <script>
+import axios from "axios";
 
 import MyPageProjectsEditModal from '@/components/MyPageProjectsEditModal.vue'
 
@@ -86,6 +87,8 @@ export default{
     data() {
         return {
             isEditProjectOpen: false,
+
+            config: null,
         }
     },
     methods: {
@@ -97,7 +100,7 @@ export default{
         },
 
         delete_project() {
-            fetch("http://183.105.120.175:30004/project/" + this.myProject.id, {
+            fetch(this.config.delete_project + this.myProject.id, {
                 method: "DELETE",
                 headers: {
                     "Content-Type": "application/json",
@@ -127,8 +130,20 @@ export default{
         },
         edit_project() {
 
-        }
-    }
+        },
+        set_config() {
+            return axios.get('/config.json')
+            .then(response => {
+                this.config = response.data;
+            })
+            .catch(error => {
+                console.log(error);
+            });
+        },
+    },
+    created() {
+    this.set_config()
+  },
 }
 </script>
 

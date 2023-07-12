@@ -69,7 +69,7 @@
 
 <script>
 import $ from 'jquery';
-
+import axios from "axios";
 
 export default{
    data() {
@@ -88,7 +88,9 @@ export default{
             project_script : "",
          },
          emptyFields: false,
-         Project_typelist : ["Classification", "Detection", "Segmentation"]
+         Project_typelist : ["Classification", "Detection", "Segmentation"],
+
+         config: null,
       }
    },
 
@@ -123,7 +125,7 @@ export default{
          this.project_info.project_script = event.target.value;
       },
       handle_toggle() {
-         this.post_register_account()
+         this.post_register_project()
 
       },
 
@@ -159,9 +161,9 @@ export default{
 
       },
 
-      post_register_account() {
+      post_register_project() {
          console.log(this.$store.state.account.User_ID)
-         fetch("http://183.105.120.175:30004/project", {
+         fetch(this.config.create_project, {
          method: "POST",
          headers: {
             "Content-Type": "application/json",
@@ -185,6 +187,18 @@ export default{
          });
 
       },
+      set_config() {
+         return axios.get('/config.json')
+         .then(response => {
+         this.config = response.data;
+         })
+         .catch(error => {
+         console.log(error);
+         });
+      },
+   },
+   created() {
+      this.set_config()
    },
    mounted() {
       document.addEventListener("click", this.handleOutsideClick);
