@@ -1,7 +1,8 @@
 {
-    "monitoring_API_period": 500,
+    "monitoring_API_period_get_status": 500,
     "monitoring_start": "http://183.105.120.175:30007/application/start/",
     "monitoring_stop": "http://183.105.120.175:30007/application/stop/",
     "get_latest_image": "http://183.105.120.175:30007/infer/latest/",
-    "stream_latest_image": "http://183.105.120.175:30007/infer/stream/"
+    "stream_latest_image": "http://183.105.120.175:30007/infer/stream/",
+    "get_application_status": "http://183.105.120.175:30007/application/status/"
 }

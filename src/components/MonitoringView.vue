@@ -35,8 +35,8 @@
               <p class="column-header">검사 결과</p>
               <p style="font-family: Poppins-SemiBold; font-size:1.5rem; margin-bottom:0;" :style="{'color': Summary.result === 'NG' ? 'red' : 'black'}" >{{ Summary.result }}</p>
           </div>
-          <div id="btn-start" style="margin-left: auto; margin-right: 3.0em;" @click="click_start">검사 시작</div>
-          <div id="btn-stop" style="margin-left: 1.0em; margin-right: 3.0em;" @click="click_stop">검사 중지</div>
+          <div v-if="status_application === 'ready'" id="btn-start" style="margin-left: auto; margin-right: 3.0em;" @click="click_start">검사 시작</div>
+          <div v-else-if="status_application === 'running'" id="btn-stop" style="margin-left: auto; margin-right: 3.0em;" @click="click_stop">검사 중지</div>
           <!-- <div id="btn-tmp" style="margin-left: 1.0em; margin-right: 3.0em;" @click="initialize">임시 front 상태 초기화</div> -->
 
       </div>
@@ -445,8 +445,12 @@ export default{
 
       SelectedImage: null,
 
-      flag_IntervalAPILoadData : false,
-      IntervalAPILoadData : null,
+      // flag_IntervalAPILoadData : false,
+      // IntervalAPILoadData : null,
+
+      status_application: null, // "ready", "running"
+      flag_IntervalAPIGetStatus : false,
+      IntervalAPIGetStatus : null,
 
       isModalOpen: false,
       isMaskSwitch: true,
@@ -477,23 +481,52 @@ export default{
       };
     },
 
-    // Cycle
-    Set_Interval_LoadData () {
-      let period = this.config.monitoring_API_period
-      if(!this.flag_IntervalAPILoadData) {
-          this.IntervalAPILoadData = setInterval(this.load_data, period)
-          this.flag_IntervalAPILoadData = true
-          console.log("Set Periodically API Monitoring Start")
-        }
-    },
-    Clear_Interval_LoadData () {
-      if (this.flag_IntervalAPILoadData) {
-        clearInterval(this.IntervalAPILoadData)
-        this.flag_IntervalAPILoadData = false
-        console.log("Clear Periodically API Monitoring ")
+    // 임시
+    Set_Interval_getstatus() {
+      let period = this.config.monitoring_API_period_get_status
+      if(!this.flag_IntervalAPIGetStatus) {
+        this.IntervalAPIGetStatus = setInterval(this.get_statusApplication, period)
+        this.flag_IntervalAPIGetStatus = true
+        console.log("Set Periodically API Monitoring Start")
       }
     },
 
+    // Cycle
+    // Set_Interval_LoadData () {
+    //   let period = this.config.monitoring_API_period
+    //   if(!this.flag_IntervalAPILoadData) {
+    //       this.IntervalAPILoadData = setInterval(this.load_data, period)
+    //       this.flag_IntervalAPILoadData = true
+    //       console.log("Set Periodically API Monitoring Start")
+    //     }
+    // },
+    // Clear_Interval_LoadData () {
+    //   if (this.flag_IntervalAPILoadData) {
+    //     clearInterval(this.IntervalAPILoadData)
+    //     this.flag_IntervalAPILoadData = false
+    //     console.log("Clear Periodically API Monitoring ")
+    //   }
+    // },
+
+    get_statusApplication() {
+      $.ajax({
+          url: this.config.get_application_status + this.$store.state.project.id,
+          method: "GET",
+          dataType: "json",
+          error: jqXHR => {
+            if (jqXHR.status == 500) {
+              this.status_application = "ready"
+              console.log(jqXHR.status, this.status_application)
+            }
+          }
+        })
+        .then((data, textStatus, jqXHR) => {
+          if(jqXHR.status == 200) {
+            this.status_application = "running"
+            console.log(jqXHR.status, this.status_application)
+          }
+        })
+    },
     load_data() {
       $.ajax({
           url: this.config.get_latest_image + this.$store.state.project.id,
@@ -679,22 +712,27 @@ export default{
         },
       }).then( data => {
         if(data.status == '200'){
-          // alert("검사 시작합니다!");
+          // console.log("검사 시작합니다!");
+          // this.status_application = "running"
+          // console.log(this.status_application)
           // console.log(this.monitorSwitch)
           // this.Set_Interval_LoadData()
         }
       });
     },
     click_stop() {
+      let project_id = this.$store.state.project.id
       // fetch("http://183.105.120.175:30007/main_application/stop", {
-      fetch(this.config.monitoring_stop, {
+      fetch(this.config.monitoring_stop + project_id, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
       }).then( data => {
         if(data.status == '200'){
-          // alert("검사 중지합니다.!");
+          // console.log("검사 중지합니다.!");
+          // this.status_application = "ready"
+          // console.log(this.status_application)
           // console.log(this.monitorSwitch)
           // this.Clear_Interval_LoadData()
         }
@@ -721,6 +759,8 @@ export default{
     .then(() => {
       // SSE setup
       this.setupEventSource();
+      // this.get_statusApplication()
+      this.Set_Interval_getstatus()
     })
   },
   mounted() {
@@ -776,13 +816,13 @@ export default{
   /* font-weight: bold; */
 }
 #btn-start {
-  color: #2777E4;
+  color: #2DCCFF;
   background-color: #F0F0F5;
   border-color: #D2E7FF;
   cursor: pointer;
 
   display: inline-block;
-  font-weight: 400;
+  font-weight: 900;
   text-align: center;
   white-space: nowrap;
   vertical-align: middle;
@@ -790,7 +830,7 @@ export default{
 
   margin: 0 0.25rem;
   padding: 0.25rem 0.5rem;
-  font-size: 0.875rem;
+  font-size: 1.25rem;
   line-height: 1.5;
   border-radius: 1.0rem;
 
@@ -798,7 +838,7 @@ export default{
   font-weight: bold;
 }
 #btn-stop {
-  color: #2777E4;
+  color: #FF3838;
   background-color: #F0F0F5;
   border-color: #D2E7FF;
   cursor: pointer;
@@ -812,7 +852,7 @@ export default{
 
   margin: 0 0.25rem;
   padding: 0.25rem 0.5rem;
-  font-size: 0.875rem;
+  font-size: 1.25rem;
   line-height: 1.5;
   border-radius: 1.0rem;
 
