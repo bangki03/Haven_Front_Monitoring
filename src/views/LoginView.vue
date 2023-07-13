@@ -10,14 +10,16 @@
         style="height: 58.9px; width: 176px; padding: 0;"
       />
       <p style="margin-left: auto; margin-right:0.5em; height: 1.5rem; margin-bottom: 0; cursor: pointer;" @mouseenter="showrevision = true" @mouseleave="showrevision = false">
-        Version : A.08 / Relase Date : 23.07.13 01:20</p>
+        Version : A.09 / Relase Date : 23.07.14 01:00</p>
       <div v-if=showrevision class="revision">
         <br>
-        Version : A.08<br>
-        Relase Date : 23.07.13 01:20<br>
+        Version : A.09<br>
+        Relase Date : 23.07.14 01:00<br>
         <br>
-        [MyPageView]<br>
-        - 활용, 알림, 소식 더미 내용 삭제<br>
+        [MonitoringView]<br>
+        - 모델정보 표시 추가<br>
+        - ready 상태(검사중지 -> 검사시작) 될 때, deploy model 최신화 요청<br>
+        - 검사시작 클릭 시, application running 전까지 준비상태(busy) 표현<br>
         <br>
       </div>
     </div>

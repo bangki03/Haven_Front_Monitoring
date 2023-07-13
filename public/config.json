@@ -5,11 +5,15 @@
     "get_latest_image": "http://183.105.120.175:30007/infer/latest/",
     "stream_latest_image": "http://183.105.120.175:30007/infer/stream/",
     "get_application_status": "http://183.105.120.175:30007/application/status/",
+    
     "get_login": "http://183.105.120.175:30004/user/login",
     "get_user": "http://183.105.120.175:30004/user",
     "create_user": "http://183.105.120.175:30004/user",
+
     "get_projectlist": "http://183.105.120.175:30004/project/",
     "delete_project": "http://183.105.120.175:30004/project/",
     "create_project": "http://183.105.120.175:30004/project/",
-    "update_project": "http://183.105.120.175:30004/project/"
+    "update_project": "http://183.105.120.175:30004/project/",
+
+    "get_model_deployed": "http://183.105.120.175:30004/ai-model/deployed/"
 }

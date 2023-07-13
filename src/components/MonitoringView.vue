@@ -15,29 +15,46 @@
         </div>
       </div>
       <div class="dard-main" style="display:flex; flex-direction: row; align-items: center;">
-          <div style="display:flex; flex-direction: column; align-items: flex-start; margin:0.5em 1.0em 0.5em 2.0em;">
-              <p class="column-header">제품 시리얼 번호</p>
-              <p style="font-family: Poppins-SemiBold; font-size:1.5rem; margin-bottom:0;">{{ Summary.serialNo }}</p>
-          </div>
-          <div style="display:flex; flex-direction: column; align-items: flex-start; margin:0.5em 1.0em;">
-              <p class="column-header">검사 일시</p>
-              <p style="font-family: Poppins-SemiBold; font-size:1.5rem; margin-bottom:0;">{{ Summary.date }}</p>
-          </div>
-          <div style="display:flex; flex-direction: column; align-items: center; margin:0.5em 1.0em;">
-              <p class="column-header">검사 시간</p>
-              <p style="font-family: Poppins-SemiBold; font-size:1.5rem; margin-bottom:0;">{{ Summary.time }}</p>
-          </div>
-          <div style="display:flex; flex-direction: column; align-items: center; margin:0.5em 1.0em;">
-              <p class="column-header">모델 불확실성</p>
-              <p style="font-family: Poppins-SemiBold; font-size:1.5rem; margin-bottom:0;">{{ Summary.uncertainty }}</p>
-          </div>
-          <div style="display:flex; flex-direction: column; align-items: center; margin:0.5em 1.0em;">
-              <p class="column-header">검사 결과</p>
-              <p style="font-family: Poppins-SemiBold; font-size:1.5rem; margin-bottom:0;" :style="{'color': Summary.result === 'NG' ? 'red' : 'black'}" >{{ Summary.result }}</p>
-          </div>
-          <div v-if="status_application === 'ready'" id="btn-start" style="margin-left: auto; margin-right: 3.0em;" @click="click_start">검사 시작</div>
-          <div v-else-if="status_application === 'running'" id="btn-stop" style="margin-left: auto; margin-right: 3.0em;" @click="click_stop">검사 중지</div>
-          <!-- <div id="btn-tmp" style="margin-left: 1.0em; margin-right: 3.0em;" @click="initialize">임시 front 상태 초기화</div> -->
+        <div style="display:flex; flex-direction: column; align-items: flex-start; margin:0.5em 10.0em 0.5em 2.0em;">
+            <p class="column-header">모델 정보</p>
+            <div style="display:flex; flex-direction: row; justify-content: flex-start; align-items: center;">
+              <p style="font-family: Poppins-SemiBold; font-size:1.5rem; margin-bottom:0;">{{ Summary_ModelInfo.name }}</p>
+              <div style="position:relative">
+                <i class="fa-solid fa-circle-info" style="margin-left: 0.3rem;" @click="openModelInfo"></i>
+                <div v-show="showModel" style="position:absolute; top:100%; width:1200%; left:-400%; background-color: lightgray; border-radius: 1rem; display:flex; flex-direction: column; justify-content: flex-start; align-items: flex-start; cursor:default;">
+                  <p style="margin-left:1rem; margin-top:1rem; margin-bottom: 0.5rem; font-family: Poppins-SemiBold; font-weight:600;">모델명 : {{ Summary_ModelInfo.name }}</p>
+                  <p style="margin-left:1rem; margin-bottom: 0.5rem; font-family: Poppins-SemiBold; font-weight:600;">모델id : {{ Summary_ModelInfo.id }}</p>
+                  <p style="margin-left:1rem; margin-bottom: 0.5rem; font-family: Poppins-SemiBold; font-weight:600;">정확도 : {{ Summary_ModelInfo.val_score }}</p>
+                  <p style="margin-left:1rem; margin-bottom: 1.0rem; font-family: Poppins-SemiBold; font-weight:600;">설명 : {{ Summary_ModelInfo.description }}</p>
+                </div>
+              </div>
+              
+            </div>
+        </div>
+        <div style="display:flex; flex-direction: column; align-items: flex-start; margin:0.5em 1.0em;">
+            <p class="column-header">제품 시리얼 번호</p>
+            <p style="font-family: Poppins-SemiBold; font-size:1.5rem; margin-bottom:0;">{{ Summary_TestInfo.serialNo }}</p>
+        </div>
+        <div style="display:flex; flex-direction: column; align-items: flex-start; margin:0.5em 1.0em;">
+            <p class="column-header">검사 일시</p>
+            <p style="font-family: Poppins-SemiBold; font-size:1.5rem; margin-bottom:0;">{{ Summary_TestInfo.date }}</p>
+        </div>
+        <div style="display:flex; flex-direction: column; align-items: center; margin:0.5em 1.0em;">
+            <p class="column-header">검사 시간</p>
+            <p style="font-family: Poppins-SemiBold; font-size:1.5rem; margin-bottom:0;">{{ Summary_TestInfo.time }}</p>
+        </div>
+        <div style="display:flex; flex-direction: column; align-items: center; margin:0.5em 1.0em;">
+            <p class="column-header">모델 불확실성</p>
+            <p style="font-family: Poppins-SemiBold; font-size:1.5rem; margin-bottom:0;">{{ Summary_TestInfo.uncertainty }}</p>
+        </div>
+        <div style="display:flex; flex-direction: column; align-items: center; margin:0.5em 1.0em;">
+            <p class="column-header">검사 결과</p>
+            <p style="font-family: Poppins-SemiBold; font-size:1.5rem; margin-bottom:0;" :style="{'color': Summary_TestInfo.result === 'NG' ? 'red' : 'black'}" >{{ Summary_TestInfo.result }}</p>
+        </div>
+        <div v-if="status_application === 'ready'" id="btn-start" style="margin-left: auto; margin-right: 3.0em;" @click="click_start">검사 시작</div>
+        <div v-else-if="status_application === 'busy'" id="btn-stop" style="margin-left: auto; margin-right: 5.5em; margin-top: -0.5rem ;pointer-events: none;" ><fade-loader :color="'#BD7C4A'" :height="'10px'" :width="'5px'" :radius="'10px'"></fade-loader></div>
+        <div v-else-if="status_application === 'running'" id="btn-stop" style="margin-left: auto; margin-right: 3.0em;" @click="click_stop">검사 중지</div>
+        <!-- <div id="btn-tmp" style="margin-left: 1.0em; margin-right: 3.0em;" @click="initialize">임시 front 상태 초기화</div> -->
 
       </div>
       <!-- <div style="background-color: white;">
@@ -367,10 +384,12 @@
 import ModalFocusedImgInterior from "@/components/ModalFocusedImgInterior.vue"
 import axios from "axios";
 import $ from 'jquery'
+import FadeLoader from 'vue-spinner/src/FadeLoader.vue'
 
 export default{
   components: {
-    ModalFocusedImgInterior
+    ModalFocusedImgInterior,
+    FadeLoader
   },
   data() {
     return {
@@ -433,15 +452,24 @@ export default{
         H7: { status: false, imagepath_origin: "", imagepath: "", maskpath_origin: "", maskpath: "", date: "", time: "", uncertainty: "", result: null},
       },
 
-      Summary: {
+      Summary_TestInfo: {
         serialNo: "-",
         date: "-",
         time: "-",
         uncertainty: "-",
         result: "-",
-
       },
+
+      Summary_ModelInfo: {
+        id: 0,
+        name: "-",
+        description: "-",
+        create_user_name: "-",
+        val_score: 0,
+      },
+
       config : null,
+      showModel : false,
 
       SelectedImage: null,
 
@@ -457,6 +485,9 @@ export default{
     }
   },
   methods: {
+    openModelInfo() {
+      this.showModel = !this.showModel;
+    },
     // SSE
     setupEventSource() {
       const eventSource = new EventSource(this.config.stream_latest_image + this.$store.state.project.id); // 서버의 SSE 엔드포인트로 연결합니다.
@@ -515,14 +546,19 @@ export default{
           dataType: "json",
           error: jqXHR => {
             if (jqXHR.status == 500) {
-              this.status_application = "ready"
+              if(this.status_application != "busy") {
+                this.status_application = "ready"
+              }
               console.log(jqXHR.status, this.status_application)
             }
           }
         })
         .then((data, textStatus, jqXHR) => {
           if(jqXHR.status == 200) {
+
             this.status_application = "running"
+
+
             console.log(jqXHR.status, this.status_application)
           }
         })
@@ -550,10 +586,10 @@ export default{
     },
     update_section(data) {
       if(this.isModalOpen == false) {
-        this.Summary.date = data.date
-        this.Summary.time = data.time
-        this.Summary.uncertainty = data.uncertainty == null ? "-" : data.uncertainty
-        this.Summary.result = data.result == null ? "-" : data.result
+        this.Summary_TestInfo.date = data.date
+        this.Summary_TestInfo.time = data.time
+        this.Summary_TestInfo.uncertainty = data.uncertainty == null ? "-" : data.uncertainty
+        this.Summary_TestInfo.result = data.result == null ? "-" : data.result
       }
 
 
@@ -676,26 +712,26 @@ export default{
 
       this.isModalOpen = true
 
-      this.Summary.date = this.SelectedImage.date
-      this.Summary.time = this.SelectedImage.time
-      this.Summary.uncertainty = this.SelectedImage.uncertainty
-      this.Summary.result = this.SelectedImage.result
+      this.Summary_TestInfo.date = this.SelectedImage.date
+      this.Summary_TestInfo.time = this.SelectedImage.time
+      this.Summary_TestInfo.uncertainty = this.SelectedImage.uncertainty
+      this.Summary_TestInfo.result = this.SelectedImage.result
 
     },
     closeModal(){
       let sectionID = this.getLatestImageSection()
       console.log("latestkey: ", sectionID)
       if(sectionID != null) {
-        this.Summary.date = this.ImageList[sectionID].date
-        this.Summary.time = this.ImageList[sectionID].time
-        this.Summary.uncertainty = this.ImageList[sectionID].uncertainty
-        this.Summary.result = this.ImageList[sectionID].result
+        this.Summary_TestInfo.date = this.ImageList[sectionID].date
+        this.Summary_TestInfo.time = this.ImageList[sectionID].time
+        this.Summary_TestInfo.uncertainty = this.ImageList[sectionID].uncertainty
+        this.Summary_TestInfo.result = this.ImageList[sectionID].result
       }
       else {
-        this.Summary.date = "-"
-        this.Summary.time = "-"
-        this.Summary.uncertainty = "-"
-        this.Summary.result = "-"
+        this.Summary_TestInfo.date = "-"
+        this.Summary_TestInfo.time = "-"
+        this.Summary_TestInfo.uncertainty = "-"
+        this.Summary_TestInfo.result = "-"
       }
 
       this.isModalOpen = false;
@@ -713,7 +749,7 @@ export default{
       }).then( data => {
         if(data.status == '200'){
           // console.log("검사 시작합니다!");
-          // this.status_application = "running"
+          this.status_application = "busy"
           // console.log(this.status_application)
           // console.log(this.monitorSwitch)
           // this.Set_Interval_LoadData()
@@ -739,6 +775,28 @@ export default{
       });
     },
 
+    load_model_deployed() {
+      $.ajax({
+          url: this.config.get_model_deployed + this.$store.state.project.id, // 클라이언트가 HTTP 요청을 보낼 서버의 URL 주소
+          method: "GET",   // HTTP 요청 메소드(GET, POST 등)
+          dataType: "json", // 서버에서 보내줄 데이터의 타입
+          // data: {
+          //     project_id: Number(this.$store.state.project.id),
+          // }
+      })
+      .then( data => {
+        this.parse_model_deployed(data.deployed_ai_model);
+      })
+    },
+
+    parse_model_deployed(data) {
+      this.Summary_ModelInfo.id = data.id !== null ? String(data.id) : "-"
+      this.Summary_ModelInfo.name = data.name !== "" ? data.name : "-"
+      this.Summary_ModelInfo.description = data.description !== "" ? data.description : "-"
+      this.Summary_ModelInfo.create_user_name = data.create_user_name !== "" ? data.create_user_name : "-"
+      this.Summary_ModelInfo.val_score = data.val_score !== null ? (data.val_score * 100).toFixed(2) + "%" : "-"
+    },
+
 
     set_config() {
       return axios.get('/config.json')
@@ -753,6 +811,13 @@ export default{
 
 
   },
+  watch: {
+    "status_application"(newStatus) {
+      if(newStatus == "ready") {
+        this.load_model_deployed()
+      }
+    }
+  },
 
   created() {
     this.set_config()
@@ -761,6 +826,7 @@ export default{
       this.setupEventSource();
       // this.get_statusApplication()
       this.Set_Interval_getstatus()
+      this.load_model_deployed()
     })
   },
   mounted() {
