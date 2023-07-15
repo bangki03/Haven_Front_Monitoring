@@ -10,16 +10,19 @@
         style="height: 58.9px; width: 176px; padding: 0;"
       />
       <p style="margin-left: auto; margin-right:0.5em; height: 1.5rem; margin-bottom: 0; cursor: pointer;" @mouseenter="showrevision = true" @mouseleave="showrevision = false">
-        Version : A.09 / Relase Date : 23.07.14 01:00</p>
+        Version : A.10 / Relase Date : 23.07.15 10:00</p>
       <div v-if=showrevision class="revision">
         <br>
-        Version : A.09<br>
-        Relase Date : 23.07.14 01:00<br>
+        Version : A.10<br>
+        Relase Date : 23.07.15 10:00<br>
+        <br>
+        [LoginView]<br>
+        - 회원가입 시, 이름 사라지는 버그 개선<br>
         <br>
         [MonitoringView]<br>
-        - 모델정보 표시 추가<br>
-        - ready 상태(검사중지 -> 검사시작) 될 때, deploy model 최신화 요청<br>
-        - 검사시작 클릭 시, application running 전까지 준비상태(busy) 표현<br>
+        - 모델 정확도 표기 수정<br>
+          └ 표기명: 정확도 → 성능<br>
+          └ '%' 제거<br>
         <br>
       </div>
     </div>

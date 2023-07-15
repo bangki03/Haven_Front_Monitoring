@@ -19,7 +19,7 @@
       <form class="form-group" @submit.prevent="doRegister">
       <!-- <form class="form-group"> -->
         <input id="register_id" :value="prop_account.Email" @input="prop_account.Email = $event.target.value" @blur="saveInputValue" type="email" class="form-control" placeholder="이메일" required>
-        <input id="register_name" :value="prop_account.Name" @input="prop_account.EmaNameil = $event.target.value" @blur="saveInputValue" type="name" class="form-control" placeholder="이름" required>
+        <input id="register_name" :value="prop_account.Name" @input="prop_account.Name = $event.target.value" @blur="saveInputValue" type="name" class="form-control" placeholder="이름" required>
         <input id="register_password" :value="prop_account.Password" @input="prop_account.Password = $event.target.value" @blur="saveInputValue" type="password" class="form-control" placeholder="비밀번호" required>
         <input id="register_passwordconfirm" :value="prop_account.Password_confirm" @input="prop_account.Password_confirm = $event.target.value" @blur="saveInputValue" type="password" class="form-control" placeholder="비밀번호 확인" required>
         <input id="register_phonenNo" :value="prop_account.PhoneNumber" @input="prop_account.PhoneNumber = $event.target.value" @blur="saveInputValue" type="tel" class="form-control" placeholder="휴대폰 번호(010-OOOO-OOOO)" required>
@@ -224,7 +224,7 @@ export default{
     },
 
   },
-  
+
   created() {
     this.set_config()
   },

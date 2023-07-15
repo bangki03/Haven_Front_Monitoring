@@ -24,7 +24,7 @@
                 <div v-show="showModel" style="position:absolute; top:100%; width:1200%; left:-400%; background-color: lightgray; border-radius: 1rem; display:flex; flex-direction: column; justify-content: flex-start; align-items: flex-start; cursor:default;">
                   <p style="margin-left:1rem; margin-top:1rem; margin-bottom: 0.5rem; font-family: Poppins-SemiBold; font-weight:600;">모델명 : {{ Summary_ModelInfo.name }}</p>
                   <p style="margin-left:1rem; margin-bottom: 0.5rem; font-family: Poppins-SemiBold; font-weight:600;">모델id : {{ Summary_ModelInfo.id }}</p>
-                  <p style="margin-left:1rem; margin-bottom: 0.5rem; font-family: Poppins-SemiBold; font-weight:600;">정확도 : {{ Summary_ModelInfo.val_score }}</p>
+                  <p style="margin-left:1rem; margin-bottom: 0.5rem; font-family: Poppins-SemiBold; font-weight:600;">성능 : {{ Summary_ModelInfo.val_score }}</p>
                   <p style="margin-left:1rem; margin-bottom: 1.0rem; font-family: Poppins-SemiBold; font-weight:600;">설명 : {{ Summary_ModelInfo.description }}</p>
                 </div>
               </div>
@@ -794,7 +794,7 @@ export default{
       this.Summary_ModelInfo.name = data.name !== "" ? data.name : "-"
       this.Summary_ModelInfo.description = data.description !== "" ? data.description : "-"
       this.Summary_ModelInfo.create_user_name = data.create_user_name !== "" ? data.create_user_name : "-"
-      this.Summary_ModelInfo.val_score = data.val_score !== null ? (data.val_score * 100).toFixed(2) + "%" : "-"
+      this.Summary_ModelInfo.val_score = data.val_score !== null ? (data.val_score * 100).toFixed(2) : "-"
     },
 
 
